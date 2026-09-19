@@ -15,8 +15,16 @@ let appPromise:
   | undefined;
 
 function bancoDeProducaoConfigurado(): boolean {
-  const url = process.env.DATABASE_URL?.trim() ?? "";
-  return Boolean(url && !url.startsWith("file:") && process.env.DATABASE_AUTH_TOKEN?.trim());
+  // Support both DATABASE_URL (legacy) and TURSO_DATABASE_URL (preferred).
+  const dbUrl =
+    process.env.TURSO_DATABASE_URL?.trim() ||
+    process.env.DATABASE_URL?.trim() ||
+    "";
+  const dbToken =
+    process.env.TURSO_AUTH_TOKEN?.trim() ||
+    process.env.DATABASE_AUTH_TOKEN?.trim() ||
+    "";
+  return Boolean(dbUrl && !dbUrl.startsWith("file:") && dbToken);
 }
 
 function configuracaoSensivelCompleta(): boolean {
