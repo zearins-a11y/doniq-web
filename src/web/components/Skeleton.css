@@ -1,0 +1,40 @@
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--linha, #e5e7eb) 0%,
+    var(--via, #f3f4f6) 50%,
+    var(--linha, #e5e7eb) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Linha de histórico */
+.skeleton-relato {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--linha, #e5e7eb);
+}
+.skeleton-relato__left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.skeleton-relato__right {
+  flex-shrink: 0;
+}
+
+/* Campo de formulário */
+.skeleton-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}

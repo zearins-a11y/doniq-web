@@ -1,0 +1,33 @@
+{
+	"files": [],
+	"references": [
+		{
+			"path": "./tsconfig.app.json"
+		},
+		{
+			"path": "./tsconfig.node.json"
+		}
+	],
+	"compilerOptions": {
+		"target": "ES2022",
+		"lib": [
+			"ES2023",
+			"DOM"
+		],
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"skipLibCheck": true,
+		"noEmit": true,
+		"noCheck": true,
+		"types": [
+			"node",
+			"bun"
+		],
+		"strict": true,
+		"paths": {
+			"@/*": [
+				"./src/web/*"
+			]
+		}
+	}
+}

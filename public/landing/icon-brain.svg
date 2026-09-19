@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Memória">
+  <defs>
+    <linearGradient id="grad-brain" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7C4DFF"/>
+      <stop offset="55%" stop-color="#168CFF"/>
+      <stop offset="100%" stop-color="#20D6F4"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Fundo arredondado -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="#071225" stroke="#29476E" stroke-width="1.5"/>
+  
+  <!-- Cérebro estilizado -->
+  <g fill="none" stroke="url(#grad-brain)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Hemisfério esquerdo -->
+    <path d="M24 20 C18 20, 14 26, 14 32 C14 38, 18 44, 24 44"/>
+    <path d="M24 26 C21 26, 19 29, 19 32 C19 35, 21 38, 24 38"/>
+    
+    <!-- Hemisfério direito -->
+    <path d="M40 20 C46 20, 50 26, 50 32 C50 38, 46 44, 40 44"/>
+    <path d="M40 26 C43 26, 45 29, 45 32 C45 35, 43 38, 40 38"/>
+    
+    <!-- Conexões centrais (corpo caloso) -->
+    <path d="M24 28 Q32 24 40 28" opacity="0.6"/>
+    <path d="M24 36 Q32 40 40 36" opacity="0.6"/>
+    
+    <!-- Linhas de atividade neural -->
+    <path d="M20 32 L24 32" opacity="0.5"/>
+    <path d="M40 32 L44 32" opacity="0.5"/>
+    
+    <!-- Pontos de memória (sinapses) -->
+    <circle cx="32" cy="18" r="2.5" fill="url(#grad-brain)" stroke="none"/>
+    <circle cx="18" cy="26" r="2" fill="url(#grad-brain)" stroke="none" opacity="0.7"/>
+    <circle cx="46" cy="26" r="2" fill="url(#grad-brain)" stroke="none" opacity="0.7"/>
+    <circle cx="32" cy="46" r="2.5" fill="url(#grad-brain)" stroke="none"/>
+  </g>
+  
+  <!-- Efeito de brilho -->
+  <circle cx="32" cy="32" r="6" fill="url(#grad-brain)" opacity="0.2"/>
+</svg>

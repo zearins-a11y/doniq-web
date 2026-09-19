@@ -1,0 +1,109 @@
+/* GERADO por scripts/gerar-tokens-css.ts — não edite à mão.
+   Fonte da verdade: src/shared/tokens.ts (compartilhado com o mobile). */
+
+:root {
+  --papel: #FBFBFD;
+  --via: #FFFFFF;
+  --superficie: #F4F6FA;
+  --tinta: #071225;
+  --tinta2: #52637A;
+  --tinta3: #647089;
+  --acento: #168CFF;
+  --acento-texto: #FFFFFF;
+  --carimbo: #C2352B;
+  --ocre: #8A6A16;
+  --frio: #0E7490;
+  --violeta: #6D3BEB;
+  --linha: #ECEFF4;
+  --borda: #DEE3EB;
+  --ok: #0F7A52;
+  --aviso-fundo: #FFF8E7;
+  --alerta-fundo: #FDECEA;
+  --placeholder: #7C8CA1;
+  --grad1: #6D3BEB;
+  --grad2: #0969C9;
+  --grad3: #0E7490;
+  --foco: rgba(9,105,201,0.22);
+  --sombra: 0 1px 2px rgba(7,18,37,0.04);
+  --sombra-forte: 0 6px 20px rgba(7,18,37,0.08);
+  --gradiente-marca: linear-gradient(135deg, #7C4DFF 0%, #168CFF 52%, #20D6F4 100%);
+  --raio-selo: 6px;
+  --raio-controle: 8px;
+  --raio-sm: 8px;
+  --raio-md: 10px;
+  --raio-lg: 12px;
+  --raio-xl: 14px;
+  --raio-pill: 999px;
+  /* Escala tipográfica — não muda por tema, então fica fora dos blocos claro/
+     escuro. Ver TIPO em shared/tokens.ts para o porquê de cada degrau. */
+  --tipo-micro: 11px;
+  --tipo-label: 13px;
+  --tipo-corpo: 15px;
+  --tipo-destaque: 17px;
+  --tipo-titulo-sm: 20px;
+  --tipo-titulo: 24px;
+  --tipo-titulo-lg: 32px;
+  --tipo-display: 40px;
+  --tipo-display-lg: 56px;
+  color-scheme: light;
+}
+
+/* Segue o sistema por padrão... */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="claro"]) {
+    --papel: #030817;
+    --via: #0D1B33;
+    --superficie: #071225;
+    --tinta: #F8FAFC;
+    --tinta2: #A9B7CA;
+    --tinta3: #7E8FA6;
+    --acento: #3F9DFF;
+    --acento-texto: #030817;
+    --carimbo: #FF8A80;
+    --ocre: #F0B429;
+    --frio: #20D6F4;
+    --violeta: #A78BFA;
+    --linha: #142945;
+    --borda: #29476E;
+    --ok: #34D399;
+    --aviso-fundo: #1B2130;
+    --alerta-fundo: #2A1A20;
+    --placeholder: #6B7F99;
+    --grad1: #7C4DFF;
+    --grad2: #168CFF;
+    --grad3: #20D6F4;
+    --foco: rgba(63,157,255,0.28);
+    --sombra: 0 1px 2px rgba(0,0,0,0.35);
+    --sombra-forte: 0 6px 20px rgba(0,0,0,0.4);
+    color-scheme: dark;
+  }
+}
+
+/* ...e obedece a escolha explícita do usuário quando existe. */
+:root[data-tema="escuro"] {
+  --papel: #030817;
+  --via: #0D1B33;
+  --superficie: #071225;
+  --tinta: #F8FAFC;
+  --tinta2: #A9B7CA;
+  --tinta3: #7E8FA6;
+  --acento: #3F9DFF;
+  --acento-texto: #030817;
+  --carimbo: #FF8A80;
+  --ocre: #F0B429;
+  --frio: #20D6F4;
+  --violeta: #A78BFA;
+  --linha: #142945;
+  --borda: #29476E;
+  --ok: #34D399;
+  --aviso-fundo: #1B2130;
+  --alerta-fundo: #2A1A20;
+  --placeholder: #6B7F99;
+  --grad1: #7C4DFF;
+  --grad2: #168CFF;
+  --grad3: #20D6F4;
+  --foco: rgba(63,157,255,0.28);
+  --sombra: 0 1px 2px rgba(0,0,0,0.35);
+  --sombra-forte: 0 6px 20px rgba(0,0,0,0.4);
+  color-scheme: dark;
+}

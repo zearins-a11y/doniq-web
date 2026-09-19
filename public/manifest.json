@@ -1,0 +1,22 @@
+{
+  "name": "doniq",
+  "short_name": "doniq",
+  "description": "Falou, tá feito. Conte a visita em voz alta e revise o registro antes de concluir.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F8FC",
+  "theme_color": "#F5F8FC",
+  "icons": [
+    {
+      "src": "/marca/doniq-app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

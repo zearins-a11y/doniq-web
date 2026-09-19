@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=900" />
+<title>doniq · Adicionar visita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700;750&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink-950:#030817; --ink-900:#071225; --ink-800:#0E1A33; --ink-700:#152544;
+    --ink-600:#1E2F55; --ink-300:#7A8AA8; --ink-100:#C9D3E3; --ink-50:#F5F8FC;
+    --blue:#168CFF; --cyan:#20D6F4; --violet:#7C4DFF;
+    --positive:#3DBA8C; --warn:#E8A547; --critical:#E5484D;
+    --grad: linear-gradient(90deg, #7C4DFF 0%, #168CFF 50%, #20D6F4 100%);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin:0;
+    background:#02050B;
+    font-family:'Inter', system-ui, sans-serif;
+    color:var(--ink-50);
+    min-height:100vh;
+    padding:48px 24px 64px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width: 900px; margin:0 auto; display:flex; gap: 48px; align-items:flex-start; flex-wrap:wrap; justify-content:center; }
+  header { width: 100%; margin-bottom: 24px; display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap; }
+  h1 { font-size: 13px; font-weight:500; letter-spacing:0.06em; color:var(--ink-100); text-transform:uppercase; margin:0 0 8px; }
+  h2 { font-size: 32px; font-weight:700; letter-spacing:-0.02em; margin:0; }
+  .meta { color:var(--ink-300); font-size:12px; font-family:'IBM Plex Mono', monospace; }
+
+  .frame {
+    width: 390px; height: 844px;
+    background: var(--ink-900);
+    border-radius: 44px;
+    border: 1px solid #15203a;
+    overflow:hidden;
+    position:relative;
+    display:flex; flex-direction:column;
+    box-shadow: 0 30px 80px rgba(0,0,0,.5);
+    flex-shrink:0;
+  }
+
+  /* Backdrop (representando a home escurecida) */
+  .frame::before {
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(60% 35% at 90% 0%, rgba(22,140,255,.10), transparent 60%),
+      radial-gradient(45% 30% at 0% 100%, rgba(124,77,255,.08), transparent 60%);
+    pointer-events:none;
+  }
+
+  /* Backdrop com blur escurecido */
+  .backdrop {
+    position:absolute; inset:0;
+    background: rgba(3,8,23,.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 1;
+  }
+  /* Conteúdo da home atrás do backdrop, sutilmente visível */
+  .home-fake {
+    position:absolute; inset:0;
+    padding: 16px 20px;
+    z-index: 1;
+    opacity: .18;
+    filter: none;
+  }
+  .home-fake .status {
+    height: 54px; padding: 18px 28px 0;
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:15px; font-weight:600; color: var(--ink-50);
+  }
+  .home-fake .big {
+    margin-top: 24px;
+    font-size: 64px; line-height: 0.95; font-weight: 700; letter-spacing: -0.04em;
+    color: var(--ink-50);
+  }
+
+  .status {
+    height: 54px; padding: 18px 28px 0;
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:15px; font-weight:600;
+    position:relative; z-index:2;
+  }
+  .status .right { display:flex; gap:6px; align-items:center; }
+  .status svg { width:16px; height:16px; color:var(--ink-50); }
+
+  /* Sheet — hierarquia reforçada */
+  .sheet {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    height: 760px;
+    background: linear-gradient(180deg, rgba(14,26,51,.98), var(--ink-900));
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
+    border-top: 1px solid var(--ink-600);
+    box-shadow: 0 -24px 64px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.06);
+    display: flex; flex-direction: column;
+    z-index: 5;
+    overflow: hidden;
+  }
+  .sheet::before {
+    content:""; position:absolute; top:0; left:0; right:0; height:200px;
+    background: radial-gradient(60% 80% at 50% 0%, rgba(22,140,255,.12), transparent 70%);
+    pointer-events:none;
+  }
+  .handle {
+    width: 40px; height: 5px; border-radius: 99px;
+    background: var(--ink-600);
+    margin: 8px auto 4px;
+    flex-shrink: 0;
+    box-shadow: 0 1px 0 rgba(255,255,255,.04);
+  }
+
+  .sheet-head {
+    padding: 6px 20px 12px;
+    display:flex; justify-content:space-between; align-items:center;
+    border-bottom: 1px solid var(--ink-600);
+    flex-shrink: 0;
+    position: relative; z-index: 2;
+  }
+  .sheet-head .left { display:flex; align-items:center; gap:12px; }
+  .sheet-head .ico {
+    width: 36px; height: 36px; border-radius: 11px;
+    background: linear-gradient(135deg, rgba(124,77,255,.3), rgba(22,140,255,.3));
+    border: 1px solid rgba(22,140,255,.45);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 4px 12px rgba(22,140,255,.18), inset 0 0 0 1px rgba(255,255,255,.06);
+  }
+  .sheet-head .ico svg { width: 18px; height: 18px; color: var(--cyan); }
+  .sheet-head .t {
+    font-size: 15px; font-weight: 700; letter-spacing: -0.012em; color: var(--ink-50);
+  }
+  .sheet-head .t small {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500;
+    color: var(--ink-300); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 3px;
+  }
+  .sheet-head .close {
+    width: 36px; height: 36px; border-radius: 11px;
+    background: var(--ink-800); border: 1px solid var(--ink-600);
+    display:flex; align-items:center; justify-content:center;
+    cursor: pointer; color: var(--ink-100);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+  }
+  .sheet-head .close:active { background: var(--ink-700); }
+  .sheet-head .close svg { width: 16px; height: 16px; }
+
+  .sheet-body {
+    flex: 1; overflow-y: auto; padding: 16px 20px 0;
+    position: relative; z-index: 2;
+  }
+  .sheet-body::-webkit-scrollbar { width:0; }
+
+  /* Flowline compact no topo do sheet — hierarquia reforçada */
+  .flowline {
+    display:flex; align-items:center; gap:10px;
+    padding: 6px 0 20px;
+    border-bottom: 1px solid var(--ink-700);
+    margin-bottom: 4px;
+  }
+  .flowline .stage {
+    display:flex; align-items:center; gap: 7px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    color: var(--ink-300);
+    text-transform: uppercase;
+  }
+  .flowline .stage .dot {
+    width: 9px; height: 9px; border-radius: 99px;
+    background: var(--ink-600);
+  }
+  .flowline .stage.on { color: var(--ink-50); }
+  .flowline .stage.on .dot { background: var(--blue); box-shadow: 0 0 0 4px rgba(22,140,255,.22); }
+  .flowline .stage.future .dot { background: var(--ink-600); }
+  .flowline .arrow { color: var(--ink-600); }
+  .flowline .arrow svg { width: 14px; height: 14px; }
+
+  /* Field label */
+  .field { margin-top: 18px; }
+  .field .lbl {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    color: var(--ink-200); text-transform: uppercase;
+    margin: 0 0 10px;
+    display:flex; align-items:center; gap: 6px;
+  }
+  .field .lbl .req { color: var(--cyan); }
+
+  /* Cliente selector (compact) */
+  .client-pick {
+    display:flex; align-items:center; gap:12px;
+    background: var(--ink-800);
+    border: 1px solid var(--ink-600);
+    border-radius: 14px;
+    padding: 12px 14px;
+    cursor: pointer;
+  }
+  .client-pick .av {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, #152544, #1E2F55);
+    border: 1px solid var(--ink-600);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--ink-50); font-size: 13px; font-weight: 650;
+  }
+  .client-pick .info { flex: 1; min-width: 0; }
+  .client-pick .info .n { font-size: 14px; font-weight: 650; color: var(--ink-50); }
+  .client-pick .info .c { font-size: 12px; color: var(--ink-300); margin-top: 2px; }
+  .client-pick .chev { color: var(--ink-300); }
+  .client-pick .chev svg { width: 16px; height: 16px; }
+
+  /* Texto do relato (input grande) */
+  .relato {
+    background: var(--ink-800);
+    border: 1px solid var(--ink-600);
+    border-radius: 16px;
+    padding: 16px 16px 12px;
+    position: relative;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.04), 0 2px 8px rgba(0,0,0,.18);
+    transition: all 200ms cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .relato.focused {
+    border-color: var(--blue);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.04),
+      0 0 0 4px rgba(22,140,255,.18),
+      0 0 24px rgba(22,140,255,.12);
+  }
+  .relato textarea {
+    width: 100%; min-height: 100px;
+    background: transparent; border: 0; outline: none; resize: none;
+    color: var(--ink-50); font: inherit; font-size: 15px; line-height: 1.55;
+    font-weight: 400;
+  }
+  .relato textarea::placeholder { color: var(--ink-300); }
+  .relato .meta {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--ink-600);
+    display:flex; justify-content:space-between; align-items:center;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500;
+    color: var(--ink-300);
+  }
+  .relato .meta .mic {
+    display:flex; align-items:center; gap:7px;
+    color: var(--cyan); font-weight: 600;
+  }
+  .relato .meta .mic svg { width: 14px; height: 14px; }
+
+  /* Sugestões da IA (chips) — hierarquia reforçada */
+  .sug {
+    margin-top: 12px;
+    display:flex; flex-wrap:wrap; gap: 8px;
+  }
+  .sug-chip {
+    background: linear-gradient(135deg, rgba(22,140,255,.08), rgba(124,77,255,.06));
+    border: 1px solid rgba(22,140,255,.2);
+    border-radius: 99px;
+    padding: 8px 14px;
+    font-size: 12px; color: var(--ink-50); font-weight: 600;
+    display: inline-flex; align-items:center; gap: 8px;
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    transition: transform 160ms cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .sug-chip:active { transform: scale(0.97); }
+  .sug-chip .ai {
+    width: 18px; height: 18px; border-radius: 99px;
+    background: var(--grad);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 2px 6px rgba(22,140,255,.4);
+  }
+  .sug-chip .ai svg { width: 9px; height: 9px; color: white; stroke-width: 2.5; }
+
+  /* Status segmented */
+  .status-seg {
+    display:grid; grid-template-columns: repeat(3, 1fr);
+    background: var(--ink-800);
+    border: 1px solid var(--ink-600);
+    border-radius: 14px;
+    padding: 4px; gap: 4px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+  }
+  .status-seg .opt {
+    height: 38px;
+    border-radius: 10px;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    font-size: 13px; font-weight: 600;
+    color: var(--ink-300);
+    cursor: pointer;
+    transition: all 160ms cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .status-seg .opt svg { width: 14px; height: 14px; stroke-width: 2; }
+  .status-seg .opt.on {
+    background: var(--ink-700);
+    color: var(--ink-50);
+    font-weight: 700;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+  }
+  .status-seg .opt.on.done { background: rgba(61,186,140,.22); color: var(--positive); box-shadow: inset 0 0 0 1px rgba(61,186,140,.3); }
+  .status-seg .opt.on.pending { background: rgba(232,165,71,.22); color: var(--warn); box-shadow: inset 0 0 0 1px rgba(232,165,71,.3); }
+  .status-seg .opt.on.cancel { background: rgba(229,72,77,.22); color: var(--critical); box-shadow: inset 0 0 0 1px rgba(229,72,77,.3); }
+
+  /* Próximo passo (quick input) */
+  .quick-in {
+    background: var(--ink-800);
+    border: 1px solid var(--ink-600);
+    border-radius: 14px;
+    padding: 12px 14px;
+    display:flex; align-items:center; gap: 10px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+  }
+  .quick-in svg { width: 18px; height: 18px; color: var(--cyan); }
+  .quick-in input {
+    background: transparent; border: 0; outline: none;
+    color: var(--ink-50); font: inherit; font-size: 14px; font-weight: 500;
+    flex: 1;
+  }
+  .quick-in input::placeholder { color: var(--ink-300); }
+
+  /* Footer com botão primário */
+  .sheet-foot {
+    padding: 16px 20px 28px;
+    border-top: 1px solid var(--ink-700);
+    background: linear-gradient(180deg, rgba(7,18,37,0), rgba(7,18,37,.85) 25%, var(--ink-900));
+    flex-shrink: 0;
+    position: relative; z-index: 2;
+  }
+  .btn-primary {
+    width: 100%; height: 54px; border-radius: 14px;
+    background: var(--grad);
+    color: white;
+    border: 0; cursor: pointer; font: inherit;
+    font-size: 15px; font-weight: 700;
+    letter-spacing: -0.005em;
+    display:flex; align-items:center; justify-content:center; gap: 8px;
+    box-shadow:
+      0 14px 36px rgba(22,140,255,.4),
+      0 0 0 1px rgba(255,255,255,.08) inset;
+    transition: transform 160ms cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-primary svg { width: 18px; height: 18px; stroke-width: 2.25; }
+  .btn-secondary {
+    margin-top: 10px;
+    width: 100%; height: 44px; border-radius: 12px;
+    background: transparent;
+    color: var(--ink-300);
+    border: 0; cursor: pointer; font: inherit;
+    font-size: 13px; font-weight: 500;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>doniq · Sheet · Nova visita</h1>
+      <h2>Fluxo Falar → Revisar → Feito</h2>
+    </div>
+    <div class="meta">390 × 844 · sheet 760px · accent grad violet→blue→cyan</div>
+  </header>
+
+  <div class="frame">
+    <!-- Conteúdo da home (fake) atrás do backdrop -->
+    <div class="home-fake">
+      <div class="status">
+        <span>9:41</span>
+        <span class="right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 12.55a11 11 0 0 1 14 0"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="7" width="18" height="10" rx="2"/></svg>
+        </span>
+      </div>
+      <div class="big">12/24</div>
+    </div>
+
+    <!-- Status bar por cima -->
+    <div class="status">
+      <span>9:41</span>
+      <span class="right">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M12 20h.01"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2"/></svg>
+      </span>
+    </div>
+
+    <!-- Backdrop -->
+    <div class="backdrop"></div>
+
+    <!-- Sheet -->
+    <div class="sheet">
+      <div class="handle"></div>
+
+      <div class="sheet-head">
+        <div class="left">
+          <div class="ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </div>
+          <div class="t">Nova visita
+            <small>FALAR · 14:32 · SP</small>
+          </div>
+        </div>
+        <button class="close" aria-label="Fechar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="sheet-body">
+        <!-- Flowline mini -->
+        <div class="flowline">
+          <span class="stage on"><span class="dot"></span>Falar</span>
+          <span class="arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </span>
+          <span class="stage future"><span class="dot"></span>Revisar</span>
+          <span class="arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </span>
+          <span class="stage future"><span class="dot"></span>Feito</span>
+        </div>
+
+        <!-- Cliente -->
+        <div class="field">
+          <p class="lbl">Cliente<span class="req">●</span></p>
+          <div class="client-pick">
+            <div class="av">PS</div>
+            <div class="info">
+              <div class="n">Padaria São Bento</div>
+              <div class="c">Vila Mariana · CRM #SF-0492</div>
+            </div>
+            <span class="chev">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </div>
+        </div>
+
+        <!-- Relato -->
+        <div class="field">
+          <p class="lbl">Conte como foi<span class="req">●</span></p>
+          <div class="relato focused">
+            <textarea>Falei com o Seu Antônio. Topou testar a nova linha de orgânicos em três SKUs a partir de 15.set. Pediu amostra do blend de tomate seco e quer retorno sobre a gôndola fria até quarta. Não vai aumentar pedido de outubro ainda — espera ver giro.</textarea>
+            <div class="meta">
+              <span class="mic">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+                Áudio 0:18
+              </span>
+              <span>00:00:47 / 03:00</span>
+            </div>
+          </div>
+
+          <!-- Sugestões extraídas -->
+          <div class="sug">
+            <span class="sug-chip">
+              <span class="ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"/></svg></span>
+              Orgânicos · 3 SKUs
+            </span>
+            <span class="sug-chip">
+              <span class="ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"/></svg></span>
+              Amostra · tomate seco
+            </span>
+            <span class="sug-chip">
+              <span class="ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"/></svg></span>
+              Retorno até 10.set
+            </span>
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div class="field">
+          <p class="lbl">Status da visita</p>
+          <div class="status-seg">
+            <div class="opt on done">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+              Concluída
+            </div>
+            <div class="opt pending">Pendente</div>
+            <div class="opt cancel">Cancelada</div>
+          </div>
+        </div>
+
+        <!-- Próximo passo -->
+        <div class="field">
+          <p class="lbl">Próximo passo</p>
+          <div class="quick-in">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="9 18 15 12 9 6"/></svg>
+            <input placeholder="Ex: Enviar amostra até quarta" value="Enviar amostra de tomate seco até qua, 10.set" />
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-foot">
+        <button class="btn-primary">
+          Salvar visita
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+        </button>
+        <button class="btn-secondary">Salvar e iniciar próxima</button>
+      </div>
+    </div>
+  </div>
+
+  <aside style="max-width:380px; color:var(--ink-100); font-size:13px; line-height:1.6;">
+    <p style="color:var(--cyan); font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase;">Decisões de hierarquia</p>
+    <p><b style="color:white">Falar é o foco.</b> Textarea grande no topo do sheet, com micro ativo e contador de áudio. É o input principal — está onde o polegar alcança.</p>
+    <p><b style="color:white">Sugestões visíveis, não escondidas.</b> Chips extraídos pela IA aparecem abaixo do relato — o usuário vê que o doniq está organizando, mas "Organizar" não é etapa exigida dele.</p>
+    <p><b style="color:white">Flowline mini no topo.</b> Falar ativo (azul) · Revisar pendente · Feito pendente. Materializa a sequência sem virar uma etapa adicional.</p>
+    <p><b style="color:white">CTA principal em gradiente.</b> "Salvar visita" usa o gradiente violet→blue→cyan — momento focal da transformação. Botão secundário oferece "Salvar e iniciar próxima" (fluxo contínuo de rota).</p>
+    <p><b style="color:white">Microfone de áudio, não teclado.</b> O representante fala enquanto dirige ou anda. Textarea aceita transcrição — fallback quando não quer falar.</p>
+  </aside>
+</div>
+</body>
+</html>

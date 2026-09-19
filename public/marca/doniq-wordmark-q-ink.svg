@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 378 112" role="img" aria-labelledby="title desc">
+  <title id="title">doniq</title>
+  <desc id="desc">Wordmark Doniq em minúsculas com q proprietário em gradiente.</desc>
+  <defs>
+    <linearGradient id="q" x1="298" y1="105" x2="361" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7C4DFF"/><stop offset="0.52" stop-color="#168CFF"/><stop offset="1" stop-color="#20D6F4"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke="#071225" stroke-width="13" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="46" cy="66" r="31"/><path d="M77 18v48"/>
+    <circle cx="132" cy="66" r="31"/>
+    <path d="M184 96V62c0-17 11-27 27-27 17 0 28 11 28 28v33"/>
+    <path d="M273 39v57"/>
+  </g>
+  <circle cx="273" cy="18" r="7" fill="#071225"/>
+  <path d="M348 91A31 31 0 1 1 360 66M348 90l14 22" fill="none" stroke="url(#q)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

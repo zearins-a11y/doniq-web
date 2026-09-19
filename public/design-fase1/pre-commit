@@ -1,0 +1,57 @@
+#!/usr/bin/env node
+/**
+ * Pre-commit hook · roda o smoke test antes de qualquer commit
+ *
+ * Instalação:
+ *   git init                              # se ainda não tem .git/
+ *   cd .git/hooks && ln -s ../../pre-commit pre-commit
+ *   chmod +x pre-commit
+ *
+ * Ou simplesmente:
+ *   bash setup-pre-commit.sh
+ *
+ * O hook bloqueia o commit se algum check falhar.
+ * Para pular em emergências: git commit --no-verify
+ */
+
+import { execSync } from "node:child_process";
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
+
+const SMOKE_TEST = resolve("./smoke-test.js");
+const PROTOTIPO = resolve(process.argv[2] || "./prototipo-navegavel.html");
+
+console.log("\x1b[1m\x1b[34m▌\x1b[0m Pre-commit hook · smoke test\n");
+
+if (!existsSync(SMOKE_TEST)) {
+  console.log(`  \x1b[33m⚠\x1b[0m smoke-test.js não encontrado em ${SMOKE_TEST}`);
+  console.log(`  \x1b[33m⚠\x1b[0m Pulando validação (script não instalado)`);
+  process.exit(0);
+}
+
+if (!existsSync(PROTOTIPO)) {
+  console.log(`  \x1b[33m⚠\x1b[0m prototipo-navegavel.html não encontrado`);
+  console.log(`  \x1b[33m⚠\x1b[0m Pulando validação (arquivo principal ausente)`);
+  process.exit(0);
+}
+
+try {
+  const stdout = execSync(`node "${SMOKE_TEST}" "${PROTOTIPO}"`, {
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+  // Sucesso: o smoke-test imprime "Todos os checks passaram"
+  console.log(stdout);
+  console.log("\x1b[1m\x1b[32m▌\x1b[0m Pre-commit check passou ✅\n");
+  process.exit(0);
+} catch (err) {
+  // Falha: stdout + stderr do smoke test
+  console.log(err.stdout || "");
+  console.log(err.stderr || "");
+  console.log("");
+  console.log("\x1b[1m\x1b[31m▌\x1b[0m Pre-commit check falhou ❌\n");
+  console.log("  \x1b[33m→\x1b[0m Corrija os problemas acima antes de commitar");
+  console.log("  \x1b[33m→\x1b[0m Para pular: git commit --no-verify");
+  console.log("");
+  process.exit(1);
+}

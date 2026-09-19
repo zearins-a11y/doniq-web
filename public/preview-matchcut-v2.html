@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Matchcut v2 — Comparação A vs B</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --fg: #f5f5f5;
+    --muted: #999;
+    --accent: #5cc8ff;
+    --border: #2a2a2a;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, "SF Pro Display", system-ui, sans-serif;
+    margin: 0;
+    padding: 32px;
+  }
+  h1 { font-size: 24px; margin: 0 0 8px; }
+  h2 { font-size: 16px; margin: 32px 0 12px; color: var(--accent); }
+  .meta { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
+  .row { display: flex; gap: 8px; align-items: flex-end; margin-bottom: 24px; flex-wrap: nowrap; overflow-x: auto; }
+  .cell { flex: 0 0 auto; text-align: center; }
+  .cell img { display: block; border: 1px solid var(--border); border-radius: 4px; width: 200px; }
+  .cell .t { font-size: 11px; color: var(--muted); margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .grid-compare { display: grid; grid-template-columns: 80px 1fr; gap: 12px 16px; align-items: start; }
+  .video-block { display: flex; flex-direction: column; gap: 8px; }
+  video { width: 100%; max-width: 600px; border: 1px solid var(--border); border-radius: 6px; background: #000; }
+  .label { color: var(--accent); font-weight: 600; font-size: 13px; padding-top: 8px; }
+  .desc { color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<h1>Matchcut v2 — comparação lado a lado</h1>
+<p class="meta">Marcelo rua SP (8s) → Camila close-up clínica com UI v1.5 azul. Crossfade linear 0.8s em t=2.5s.</p>
+
+<div class="grid-compare">
+  <div class="label">Vídeo A</div>
+  <div class="video-block">
+    <video controls autoplay muted loop playsinline>
+      <source src="/matchcut-v2/matchcut-crossfade-A-v2.mp4" type="video/mp4">
+    </video>
+    <div class="desc">Camila curta (5s, single loop). Saída: 1.47 MB, 7.5s total @ 24fps.</div>
+  </div>
+
+  <div class="label">Vídeo B</div>
+  <div class="video-block">
+    <video controls autoplay muted loop playsinline>
+      <source src="/matchcut-v2/matchcut-crossfade-B-v2.mp4" type="video/mp4">
+    </video>
+    <div class="desc">Camila estendida (10s, loop 2x concatenado). Saída: 1.62 MB, 12.5s total @ 24fps.</div>
+  </div>
+</div>
+
+<h2>Variante A — frames-chave</h2>
+<div class="row">
+  <div class="cell"><img src="/matchcut-v2/matchcut-A-t0.0.jpg"><div class="t">t=0.0s (Marcelo)</div></div>
+  <div class="cell"><img src="/matchcut-v2/matchcut-A-t1.0.jpg"><div class="t">t=1.0s</div></div>
+  <div class="cell"><img src="/matchcut-v2/matchcut-A-t2.0.jpg"><div class="t">t=2.0s</div></div>
+  <div class="cell"><img src="/matchcut-v2/matchcut-A-t2.5.jpg"><div class="t">t=2.5s (início crossfade)</div></div>
+  <div class="cell"><img src="/matchcut-v2/matchcut-A-t2.9.jpg"><div class="t">t=2.9s (meio)</div></div>
+  <div class="cell"><img src="/matchcut-v2/matchcut-A-t3.3.jpg"><div class="t">t=3.3s (fim crossfade)</div></div>
+  <div class="cell"><img src="/matchcut-v2/matchcut-A-t4.0.jpg"><div class="t">t=4.0s (Camila)</div></div>
+  <div class="cell"><img src="/matchcut-v2/matchcut-A-t5.5.jpg"><div class="t">t=5.5s</div></div>
+  <div class="cell"><img src="/matchcut-v2/matchcut-A-t7.0.jpg"><div class="t">t=7.0s</div></div>
+</div>
+
+<h2>Variante B — frames-chave</h2>
+<div class="row">
+  <div class="cell"><img src="/matchcut-v2/matchcut-B-t0.0.jpg"><div class="t">t=0.0s (Marcelo)</div></div>
+  <div class="cell"><img src="/matchcut-v2/matchcut-B-t1.0.jpg"><div class="t">t=1.0s</div></div>
+  <div class="cell"><img src="/matchcut-v2/matchcut-B-t2.0.jpg"><div class="t">t=2.0s</div></div>
+  <div class="cell"><img src="/matchcut-v2/matchcut-B-t2.5.jpg"><div class="t">t=2.5s (início crossfade)</div></div>
+  <div class="cell"><img src="/matchcut-v2/matchcut-B-t2.9.jpg"><div class="t">t=2.9s (meio)</div></div>
+  <div class="cell"><img src="/matchcut-v2/matchcut-B-t3.3.jpg"><div class="t">t=3.3s (fim crossfade)</div></div>
+  <div class="cell"><img src="/matchcut-v2/matchcut-B-t4.0.jpg"><div class="t">t=4.0s (Camila)</div></div>
+  <div class="cell"><img src="/matchcut-v2/matchcut-B-t5.5.jpg"><div class="t">t=5.5s</div></div>
+  <div class="cell"><img src="/matchcut-v2/matchcut-B-t7.0.jpg"><div class="t">t=7.0s</div></div>
+</div>
+</body>
+</html>

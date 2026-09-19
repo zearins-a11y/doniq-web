@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1786806932834,
+      "tag": "0000_colorful_rick_jones",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1787071677644,
+      "tag": "0001_closed_young_avengers",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1788000000000,
+      "tag": "0002_add_tokens_columns",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1788184695459,
+      "tag": "0003_lying_bishop",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1788184695460,
+      "tag": "0004_ai_resumo_fields",
+      "breakpoints": true
+    }
+  ]
+}

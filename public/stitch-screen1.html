@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Doniq - Voice Field Assistant</title>
+<!-- Fonts: Inter & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-lowest": "#050d24",
+            "surface-dim": "#0a1229",
+            "surface-bright": "#313851",
+            "on-secondary-container": "#002a54",
+            "on-tertiary-fixed-variant": "#005138",
+            "primary-fixed": "#a6eeff",
+            "secondary": "#a7c8ff",
+            "surface-container-high": "#212941",
+            "secondary-fixed-dim": "#a7c8ff",
+            "on-background": "#dbe1ff",
+            "surface-container-highest": "#2c344d",
+            "background": "#0a1229",
+            "secondary-container": "#2f91ff",
+            "inverse-on-surface": "#282f48",
+            "on-primary": "#00363f",
+            "primary": "#9becff",
+            "surface-container-low": "#131b32",
+            "error": "#ffb4ab",
+            "on-primary-fixed": "#001f25",
+            "tertiary": "#3efcb8",
+            "surface-container": "#171f36",
+            "on-secondary": "#003060",
+            "tertiary-fixed-dim": "#00e2a0",
+            "on-secondary-fixed-variant": "#004788",
+            "on-surface-variant": "#bbc9cd",
+            "tertiary-container": "#00de9e",
+            "surface-tint": "#27d9f7",
+            "surface-variant": "#2c344d",
+            "outline": "#859397",
+            "surface": "#0a1229",
+            "outline-variant": "#3c494c",
+            "on-primary-container": "#005967",
+            "inverse-primary": "#006878",
+            "primary-fixed-dim": "#27d9f7",
+            "on-tertiary": "#003825",
+            "error-container": "#93000a",
+            "tertiary-fixed": "#43ffbb",
+            "on-tertiary-fixed": "#002114",
+            "secondary-fixed": "#d5e3ff",
+            "on-tertiary-container": "#005c3f",
+            "on-error": "#690005",
+            "on-secondary-fixed": "#001c3b",
+            "primary-container": "#20d6f4",
+            "inverse-surface": "#dbe1ff",
+            "on-primary-fixed-variant": "#004e5b",
+            "on-error-container": "#ffdad6",
+            "on-surface": "#dbe1ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.25rem",
+            "margin": "1.25rem",
+            "gutter": "1rem",
+            "margin-tablet": "2rem",
+            "gutter-tablet": "1.5rem"
+          },
+          "fontFamily": {
+            "headline-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "body-md": ["Inter"],
+            "label-caps": ["Inter"],
+            "display-mobile": ["Inter"],
+            "body-sm": ["Inter"],
+            "display-lg": ["Inter"],
+            "headline-lg": ["Inter"],
+            "label-lg": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-sm": ["Inter"]
+          },
+          "fontSize": {
+            "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-lg": ["17px", { "lineHeight": "26px", "fontWeight": "400" }],
+            "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "label-caps": ["11px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "700" }],
+            "display-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "display-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-lg": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "label-lg": ["15px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.92); opacity: 0.8; }
+      50% { transform: scale(1.18); opacity: 0.25; }
+      100% { transform: scale(0.92); opacity: 0.8; }
+    }
+    @keyframes pulse-outer {
+      0% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.32); opacity: 0.1; }
+      100% { transform: scale(1); opacity: 0.5; }
+    }
+    @keyframes wave-bounce {
+      0%, 100% { transform: scaleY(0.2); }
+      50% { transform: scaleY(1); }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .animate-ring {
+      animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    .animate-outer-ring {
+      animation: pulse-outer 3.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    .cursor-blink {
+      animation: blink 1s ease-in-out infinite;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-[#070F26] text-on-surface antialiased min-h-screen flex justify-center selection:bg-primary-container selection:text-surface-container-lowest font-body-md">
+<!-- Mobile Viewport Container (412px target ergonomic width) -->
+<div class="w-full max-w-md bg-surface min-h-screen relative flex flex-col justify-between overflow-x-hidden border-x border-surface-container-low shadow-2xl">
+<!-- Background Radial Aura for Automotive/Field Glare Reduction -->
+<div class="absolute top-[38%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] bg-primary-container/10 rounded-full blur-[110px] pointer-events-none"></div>
+<div class="absolute top-[34%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[180px] h-[180px] bg-secondary-container/15 rounded-full blur-[70px] pointer-events-none"></div>
+<!-- MAIN INTERFACE STACK -->
+<div class="relative z-10 flex flex-col flex-1 pb-28">
+<!-- 1. System Status Bar (Mobile Native Standard) -->
+<div class="flex justify-between items-center px-6 pt-3 pb-1 text-on-surface-variant font-label-md text-label-md">
+<span class="font-bold text-on-surface tracking-tight">09:41</span>
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-[16px]">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[16px]">wifi</span>
+<span class="material-symbols-outlined text-[18px]">battery_full</span>
+</div>
+</div>
+<!-- Shared Component: TopAppBar -->
+<!-- Mapping exact tokens and keys from JSON -->
+<header class="border-b border-outline-variant/40 bg-surface-dim/90 backdrop-blur-md shadow-sm sticky top-0 z-40">
+<div class="flex justify-between items-center w-full px-5 py-3.5 max-w-md mx-auto">
+<div class="flex items-center space-x-2.5">
+<span class="material-symbols-outlined text-primary text-[26px]">graphic_eq</span>
+<div class="flex items-baseline space-x-1.5">
+<span class="text-headline-md font-headline-md font-bold tracking-tight text-primary">Doniq</span>
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+</div>
+</div>
+<!-- Sync / Connectivity Status Indicator -->
+<div class="flex items-center space-x-3">
+<div class="flex items-center space-x-1.5 bg-surface-container-low px-2.5 py-1 rounded-full border border-outline-variant/40">
+<span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#3efcb8]"></span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">CRM Online</span>
+</div>
+<button class="text-primary hover:bg-surface-container-high transition-colors duration-200 active:scale-95 transition-transform duration-150 rounded-full p-0.5">
+<span class="material-symbols-outlined text-[28px]">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Action Content Area -->
+<main class="px-5 pt-4 flex flex-col flex-1">
+<!-- 2. Active Client Card (Vehicle-Mount Safe Reach) -->
+<div class="bg-surface-container rounded-xl p-4 border border-primary/20 shadow-[0_8px_24px_-4px_rgba(7,15,38,0.8)] relative overflow-hidden backdrop-blur-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-3.5">
+<div class="w-11 h-11 rounded-xl bg-surface-container-highest flex items-center justify-center border border-outline-variant/30 text-primary">
+<span class="material-symbols-outlined text-[22px]">storefront</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center space-x-2">
+<h2 class="text-headline-sm font-headline-sm text-on-surface font-bold tracking-tight">Padaria São Bento</h2>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span>Vila Mariana</span>
+<span class="text-[10px] text-outline">•</span>
+<span class="text-tertiary font-medium">Visita Presencial</span>
+</p>
+</div>
+</div>
+<!-- Client Switch Action Button -->
+<button class="h-9 px-3 rounded-full bg-surface-container-high hover:bg-surface-bright text-primary border border-primary/30 flex items-center space-x-1 transition-all active:scale-95 shadow-sm">
+<span class="text-label-md font-label-md font-bold">Trocar</span>
+<span class="material-symbols-outlined text-[16px]">swap_horiz</span>
+</button>
+</div>
+</div>
+<!-- 3. Voice Recording Stage (Primary Focus) -->
+<div class="flex flex-col items-center justify-center my-auto py-5 relative">
+<!-- Active Recording Status Badge -->
+<div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-error-container/30 border border-error/40 mb-3 shadow-[0_0_12px_rgba(255,180,171,0.15)]">
+<span class="w-2 h-2 rounded-full bg-error animate-ping"></span>
+<span class="text-label-caps font-label-caps text-error tracking-wider uppercase">Gravando Visita</span>
+</div>
+<!-- Digital Voice Timer -->
+<div class="text-display-lg font-display-lg text-on-surface tracking-tight font-bold my-1 flex items-baseline drop-shadow-[0_2px_12px_rgba(32,214,244,0.3)]">
+<span>00:14</span>
+<span class="text-primary text-headline-lg font-headline-lg font-semibold ml-1">.32</span>
+</div>
+<!-- Audio Waveform Visualization (Dynamic frequency bars) -->
+<div class="h-10 flex items-center justify-center gap-[4px] my-3 w-64 px-4 bg-surface-container-lowest/60 rounded-full border border-outline-variant/30 backdrop-blur-sm">
+<span class="w-[3px] bg-primary rounded-full animate-[wave-bounce_1.1s_ease-in-out_infinite]" style="height: 12px; animation-delay: 0.1s;"></span>
+<span class="w-[3px] bg-primary-fixed-dim rounded-full animate-[wave-bounce_0.8s_ease-in-out_infinite]" style="height: 22px; animation-delay: 0.3s;"></span>
+<span class="w-[3px] bg-primary-container rounded-full animate-[wave-bounce_1.3s_ease-in-out_infinite]" style="height: 14px; animation-delay: 0.2s;"></span>
+<span class="w-[3px] bg-secondary-container rounded-full animate-[wave-bounce_0.9s_ease-in-out_infinite]" style="height: 28px; animation-delay: 0.4s;"></span>
+<span class="w-[3px] bg-primary-container rounded-full animate-[wave-bounce_1.2s_ease-in-out_infinite]" style="height: 18px; animation-delay: 0.15s;"></span>
+<span class="w-[3px] bg-tertiary-fixed rounded-full animate-[wave-bounce_0.7s_ease-in-out_infinite]" style="height: 26px; animation-delay: 0.5s;"></span>
+<span class="w-[3px] bg-primary rounded-full animate-[wave-bounce_1.0s_ease-in-out_infinite]" style="height: 32px; animation-delay: 0.25s;"></span>
+<span class="w-[3px] bg-primary-container rounded-full animate-[wave-bounce_0.85s_ease-in-out_infinite]" style="height: 24px; animation-delay: 0.35s;"></span>
+<span class="w-[3px] bg-secondary-container rounded-full animate-[wave-bounce_1.4s_ease-in-out_infinite]" style="height: 16px; animation-delay: 0.05s;"></span>
+<span class="w-[3px] bg-primary-fixed-dim rounded-full animate-[wave-bounce_0.9s_ease-in-out_infinite]" style="height: 30px; animation-delay: 0.45s;"></span>
+<span class="w-[3px] bg-primary rounded-full animate-[wave-bounce_1.1s_ease-in-out_infinite]" style="height: 20px; animation-delay: 0.2s;"></span>
+<span class="w-[3px] bg-tertiary-fixed rounded-full animate-[wave-bounce_0.75s_ease-in-out_infinite]" style="height: 14px; animation-delay: 0.3s;"></span>
+</div>
+<!-- Massive Ergonomic Voice Trigger Hub -->
+<div class="relative flex items-center justify-center my-4">
+<!-- Outer Radiant Halo Concentric Rings -->
+<div class="absolute w-44 h-44 rounded-full border border-primary/20 bg-primary/5 animate-outer-ring pointer-events-none"></div>
+<div class="absolute w-36 h-36 rounded-full border border-primary-container/40 bg-secondary-container/10 animate-ring pointer-events-none"></div>
+<!-- Central Core Tactile Button (~130px for zero-distraction driver operation) -->
+<button class="relative z-10 w-32 h-32 rounded-full bg-gradient-to-tr from-secondary-container via-primary-container to-primary-fixed flex flex-col items-center justify-center shadow-[0_0_36px_rgba(32,214,244,0.5)] active:scale-95 transition-transform duration-150 group">
+<span class="material-symbols-outlined text-[44px] text-surface-container-lowest font-bold transition-transform group-hover:scale-110" style="font-variation-settings: 'FILL' 1;">mic</span>
+<span class="text-surface-container-lowest font-label-caps text-[10px] font-bold mt-1 tracking-wider uppercase">Ouvindo</span>
+</button>
+</div>
+<p class="text-on-surface-variant font-label-md text-label-md mt-2 flex items-center space-x-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">touch_app</span>
+<span>Toque no botão central para pausar</span>
+</p>
+</div>
+<!-- 4. Contextual AI Assist Card -->
+<div class="bg-surface-container-low/90 rounded-xl p-3.5 border border-outline-variant/40 shadow-lg relative backdrop-blur-md mb-2">
+<div class="flex items-start space-x-2.5 mb-2">
+<div class="p-1 rounded-md bg-primary-container/20 text-primary-container">
+<span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+</div>
+<div class="flex-1">
+<p class="text-body-sm font-body-sm text-on-surface-variant leading-snug">
+                Fale naturalmente. O Doniq extrai contatos, prazos e compromissos para o CRM.
+              </p>
+</div>
+</div>
+<!-- Live Speech-to-Text Transcription Pill -->
+<div class="bg-surface-container-lowest/80 rounded-lg p-2.5 border border-outline-variant/30 flex items-start space-x-2">
+<span class="material-symbols-outlined text-primary text-[16px] mt-0.5 shrink-0">chat_bubble</span>
+<p class="text-body-sm font-body-sm text-on-surface italic leading-snug">
+              “Alinhamos com o Sr. Roberto a entrega de 50 caixas na terça...”<span class="inline-block w-1.5 h-3.5 bg-primary ml-1 cursor-blink align-middle"></span>
+</p>
+</div>
+</div>
+<!-- 5. Dual Quick-Action Buttons (In-Transit Reachable) -->
+<div class="grid grid-cols-2 gap-3 mt-1 mb-2">
+<!-- Secondary Action: Pausar -->
+<button class="h-14 rounded-full bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 text-on-surface font-label-lg text-label-lg flex items-center justify-center space-x-2 transition-all active:scale-95 shadow-md">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">pause_circle</span>
+<span>Pausar</span>
+</button>
+<!-- Primary Action: Concluir Resumo -->
+<button class="h-14 rounded-full bg-gradient-to-r from-primary-container to-secondary-container hover:opacity-95 text-surface-container-lowest font-label-lg text-label-lg font-bold flex items-center justify-center space-x-2 shadow-[0_4px_20px_rgba(32,214,244,0.35)] transition-all active:scale-95">
+<span>Concluir Resumo</span>
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</button>
+</div>
+</main>
+</div>
+<!-- Shared Component: BottomNavBar -->
+<!-- Mapped directly from JSON: labels=["Gravador", "Clientes", "Atividades", "Perfil"], icons=["mic", "storefront", "dataset", "person"] -->
+<!-- Active State: 'Gravador' (Mic) mapped dynamically as this is the recording interface -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2.5 max-w-md mx-auto border-t border-outline-variant/30 bg-surface-container-lowest/95 backdrop-blur-xl shadow-[0_-8px_24px_-4px_rgba(5,13,36,0.8)]">
+<!-- Destination 1: Gravador (ACTIVE) -->
+<a class="flex flex-col items-center justify-center text-primary font-bold gap-1 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">mic</span>
+<span class="text-label-caps font-label-caps">Gravador</span>
+</a>
+<!-- Destination 2: Clientes (INACTIVE) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface gap-1 hover:text-primary transition-colors duration-200 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-[22px]">storefront</span>
+<span class="text-label-caps font-label-caps">Clientes</span>
+</a>
+<!-- Destination 3: Atividades (INACTIVE) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface gap-1 hover:text-primary transition-colors duration-200 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-[22px]">dataset</span>
+<span class="text-label-caps font-label-caps">Atividades</span>
+</a>
+<!-- Destination 4: Perfil (INACTIVE) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface gap-1 hover:text-primary transition-colors duration-200 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-[22px]">person</span>
+<span class="text-label-caps font-label-caps">Perfil</span>
+</a>
+</nav>
+<!-- Native iOS / Android Home Indicator -->
+<div class="fixed bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-outline-variant/60 rounded-full z-50 pointer-events-none"></div>
+</div>
+</body></html>
+

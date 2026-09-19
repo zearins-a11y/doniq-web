@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#F5F8FC" />
+    <meta name="stonks-collect" content="false" />
+    <script>
+      // Antes da primeira pintura: evita o flash de tela clara para quem
+      // escolheu o escuro. A escolha explícita mora em localStorage.
+      try {
+        var t = localStorage.getItem("relato_tema");
+        if (t === "claro" || t === "escuro") {
+          document.documentElement.setAttribute("data-tema", t);
+        }
+        var escuro = t === "escuro" || (!t && matchMedia("(prefers-color-scheme: dark)").matches);
+        if (escuro) {
+          document.querySelector('meta[name="theme-color"]').setAttribute("content", "#030817");
+        }
+      } catch (e) {}
+    </script>
+    <meta
+      name="description"
+      content="Doniq — assistente pós-visita para equipes em campo. O vendedor entra no carro, fala 30s e a IA estrutura tudo no seu CRM sem digitação."
+    />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="doniq" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/marca/doniq-app-icon.svg" />
+    <!-- Open Graph / WhatsApp / LinkedIn -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://doniq.com.br/" />
+    <meta property="og:title" content="doniq — Falou, tá feito." />
+    <meta
+      property="og:description"
+      content="Assistente pós-visita para equipes em campo. Fale sobre a visita, revise o registro e envie ao CRM conectado."
+    />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="pt_BR" />
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="doniq — Falou, tá feito." />
+    <meta
+      name="twitter:description"
+      content="Assistente pós-visita para equipes em campo. Fale sobre a visita, revise o registro e sincronize com seu CRM."
+    />
+    <meta name="twitter:image" content="/og-image.png" />
+    <!-- Fonts: preconnect elimina DNS+TLS latency; font-display:swap evita blank text. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    />
+    <title>doniq — Falou, tá feito.</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/web/main.tsx"></script>
+  </body>
+</html>

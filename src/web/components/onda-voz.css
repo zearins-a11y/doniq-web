@@ -1,0 +1,86 @@
+.onda-voz {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--onda-voz-gap, 3.5px);
+}
+
+.onda-voz-barra {
+  flex: 0 0 var(--onda-voz-largura-barra, 2.5px);
+  width: var(--onda-voz-largura-barra, 2.5px);
+  height: var(--onda-voz-altura);
+  border-radius: var(--onda-voz-raio-barra, 99px);
+  background: var(--onda-voz-cor-primaria, var(--frio));
+  opacity: var(--onda-voz-opacidade-repouso, 0.72);
+  transform-origin: center;
+  box-shadow: 0 0 5px rgba(32, 214, 244, 0.25);
+}
+
+.onda-voz-barra:nth-child(even) {
+  background: var(--onda-voz-cor-secundaria, var(--acento));
+}
+
+.onda-voz[data-estado="gravando"] {
+  --onda-voz-cor-primaria: var(--carimbo);
+  --onda-voz-cor-secundaria: color-mix(in srgb, var(--carimbo) 70%, var(--acento));
+}
+
+.onda-voz[data-estado="pausado"],
+.onda-voz[data-estado="offline"] {
+  --onda-voz-cor-primaria: var(--ocre);
+  --onda-voz-cor-secundaria: color-mix(in srgb, var(--ocre) 72%, var(--acento));
+}
+
+.onda-voz[data-estado="concluido"] {
+  --onda-voz-cor-primaria: var(--ok);
+  --onda-voz-cor-secundaria: color-mix(in srgb, var(--ok) 72%, var(--frio));
+}
+
+.onda-voz[data-estado="erro"] {
+  --onda-voz-cor-primaria: var(--carimbo);
+  --onda-voz-cor-secundaria: var(--carimbo);
+}
+
+.onda-voz[data-modo="animada"][data-ativa="true"] .onda-voz-barra {
+  animation: onda-voz-respirar 1.2s ease-in-out var(--onda-voz-atraso) infinite;
+}
+
+.onda-voz[data-modo="animada"][data-pausada="true"] .onda-voz-barra {
+  animation-play-state: paused;
+  opacity: 0.45;
+}
+
+.onda-voz[data-modo="nivel"] .onda-voz-barra {
+  transform: scaleY(calc(0.4 + var(--onda-voz-nivel, 0) * 0.6));
+  transition:
+    transform 90ms linear,
+    opacity var(--duracao-rapida, 140ms) var(--ease-interface, ease-out);
+}
+
+.onda-voz[data-modo="nivel"][data-ativa="true"] .onda-voz-barra {
+  opacity: 1;
+}
+
+.onda-voz[data-pausada="true"] .onda-voz-barra {
+  opacity: 0.48;
+  transform: scaleY(0.4);
+}
+
+@keyframes onda-voz-respirar {
+  0%,
+  100% {
+    transform: scaleY(0.2);
+  }
+
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .onda-voz-barra {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    transform: scaleY(0.65) !important;
+  }
+}

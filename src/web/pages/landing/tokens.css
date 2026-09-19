@@ -1,0 +1,106 @@
+/**
+ * Tokens CSS custom properties para a landing page v6.2
+ * Baseados em tokens.ts e nas decisões de brand aprovadas
+ */
+
+:root {
+  /* Cores da marca */
+  --acento: #168CFF;
+  --frio: #20D6F4;
+  --violeta: #7C4DFF;
+
+  /* Gradiente de marca */
+  --gradiente-marca: linear-gradient(135deg, #168CFF 0%, #20D6F4 100%);
+
+  /* Cores V6 (dark theme landing) */
+  --v6-papel: #02050B;
+  --v6-via: #0E1A33;
+  --v6-superficie: #071225;
+  --v6-tinta: #F5F8FC;
+  --v6-tinta2: #A4B0C7;
+  --v6-tinta3: #7A8AA8;
+  --v6-linha: #152544;
+  --v6-muted: #A4B0C7;
+  --v6-borda: #1E2F55;
+
+  /* Cores de estado */
+  --v6-ok: #3DBA8C;
+  --v6-carimbo: #E5484D;
+  --v6-ocre: #E8A547;
+
+  /* Mockup device — frame metálico em gradiente */
+  --mock-frame-1: #d8dde5;
+  --mock-frame-2: #a3acba;
+  --mock-frame-3: #6b7686;
+  --mock-frame-4: #404a59;
+  --mock-frame-5: #1d2330;
+
+  /* Gradiente (para textos e badges) */
+  --grad-1: #7C4DFF;
+  --grad-2: #168CFF;
+  --grad-3: #20D6F4;
+
+  /* Tipografia oficial da landing */
+  --fonte: 'Inter', system-ui, -apple-system, sans-serif;
+  --tamanho-micro: 11px;
+  --tamanho-label: 13px;
+  --tamanho-corpo: 15px;
+  --tamanho-destaque: 17px;
+  --tamanho-titulo-sm: 20px;
+  --tamanho-titulo: 24px;
+  --tamanho-titulo-lg: 32px;
+  --tamanho-display: 40px;
+  --tamanho-display-lg: 56px;
+
+  /* Raios */
+  --raio-selo: 6px;
+  --raio-controle: 8px;
+  --raio-md: 14px;
+  --raio-pill: 999px;
+
+  /* Toque mínimo */
+  --toque-minimo: 48px;
+
+  /* Sombras */
+  --sombra-card: 0 4px 12px rgba(22, 140, 255, 0.12);
+  --sombra-card-forte: 0 12px 32px rgba(22, 140, 255, 0.35);
+  --sombra-dispositivo: 0 30px 60px -20px rgba(0, 0, 0, 0.85),
+    0 10px 25px -10px rgba(0, 0, 0, 0.6);
+
+  /* Transições */
+  --transicao-padrao: cubic-bezier(0.22, 1, 0.36, 1);
+  --duracao-curta: 0.24s;
+  --duracao-media: 0.42s;
+  --duracao-longa: 0.56s;
+
+  /* Container */
+  --container-max: 1240px;
+  --container-padding: 24px;
+}
+
+/* Reset básico para a landing */
+.landing-v62 * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.landing-v62 {
+  font-family: var(--fonte);
+  background: var(--v6-papel);
+  color: var(--v6-tinta);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100dvh;
+  overflow-x: clip;
+}
+
+.landing-v62 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.landing-v62 img {
+  max-width: 100%;
+  height: auto;
+}

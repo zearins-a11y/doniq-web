@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Ícone do app Doniq</title><desc id="desc">Símbolo q da Doniq sobre fundo azul-marinho.</desc>
+  <defs>
+    <radialGradient id="bg" cx="76%" cy="8%" r="98%"><stop stop-color="#102A52"/><stop offset=".42" stop-color="#07162E"/><stop offset="1" stop-color="#030817"/></radialGradient>
+    <linearGradient id="q" x1="260" y1="790" x2="782" y2="266" gradientUnits="userSpaceOnUse"><stop stop-color="#7C4DFF"/><stop offset=".52" stop-color="#168CFF"/><stop offset="1" stop-color="#20D6F4"/></linearGradient>
+    <filter id="glow" x="-35%" y="-35%" width="170%" height="170%"><feGaussianBlur stdDeviation="18" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <circle cx="512" cy="496" r="330" fill="#168CFF" opacity=".07"/>
+  <g transform="translate(199 188) scale(2.7)" filter="url(#glow)">
+    <path d="M164 178A82 82 0 1 1 198 112" fill="none" stroke="url(#q)" stroke-width="30" stroke-linecap="round"/>
+    <path d="m164 178 23 44" fill="none" stroke="url(#q)" stroke-width="30" stroke-linecap="round"/>
+  </g>
+</svg>

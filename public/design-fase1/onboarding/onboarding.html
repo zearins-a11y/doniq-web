@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1200" />
+<title>doniq · Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700;750&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink-950:#030817; --ink-900:#071225; --ink-800:#0E1A33; --ink-700:#152544;
+    --ink-600:#1E2F55; --ink-300:#7A8AA8; --ink-100:#C9D3E3; --ink-50:#F5F8FC;
+    --blue:#168CFF; --cyan:#20D6F4; --violet:#7C4DFF; --slate:#52637A;
+    --grad: linear-gradient(90deg, #7C4DFF 0%, #168CFF 50%, #20D6F4 100%);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin:0;
+    background:#02050B;
+    font-family:'Inter', system-ui, sans-serif;
+    color:var(--ink-50);
+    min-height:100vh;
+    padding:48px 24px 64px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width: 1280px; margin:0 auto; }
+  header { margin-bottom: 40px; display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap; }
+  h1 {
+    font-size: 13px; font-weight:500; letter-spacing:0.06em; color:var(--ink-100);
+    text-transform:uppercase; margin:0 0 8px;
+  }
+  h2 { font-size: 32px; font-weight:700; letter-spacing:-0.02em; margin:0; }
+  .meta { color:var(--ink-300); font-size:12px; font-family:'IBM Plex Mono', monospace; }
+
+  .row { display:grid; grid-template-columns: repeat(3, 390px); gap: 40px; justify-content:center; }
+
+  .frame {
+    width: 390px; height: 844px;
+    background: var(--ink-900);
+    border-radius: 44px;
+    border: 1px solid #15203a;
+    overflow:hidden;
+    position:relative;
+    display:flex; flex-direction:column;
+    box-shadow: 0 30px 80px rgba(0,0,0,.5);
+  }
+  /* tonal nuance azul-marinho assimétrica, mais perceptível no lado oposto ao texto */
+  .frame::before {
+    content:""; position:absolute; inset:0;
+    background: radial-gradient(120% 70% at 100% 0%, rgba(22,140,255,.08), transparent 55%),
+                radial-gradient(80% 50% at 0% 100%, rgba(124,77,255,.06), transparent 60%);
+    pointer-events:none;
+  }
+
+  /* Status bar */
+  .status {
+    height: 54px; padding: 18px 28px 0;
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:15px; font-weight:600;
+    position:relative; z-index:2;
+  }
+  .status .right { display:flex; gap:6px; align-items:center; }
+  .status svg { width:16px; height:16px; color:var(--ink-50); }
+
+  /* Page indicator */
+  .dots { display:flex; gap:6px; align-items:center; }
+  .dots span { width:6px; height:6px; border-radius:99px; background:var(--ink-600); transition:all 240ms; }
+  .dots span.on { width:22px; background:var(--grad); }
+
+  /* Common content */
+  .content { flex:1; padding: 24px 24px 0; position:relative; z-index:2; display:flex; flex-direction:column; }
+
+  /* Wordmark */
+  .wm {
+    font-family:'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: -0.04em;
+    color: var(--ink-50);
+    display: inline-flex; align-items: baseline;
+  }
+  .wm .q { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  /* Headline e subheadline */
+  .h-eyebrow {
+    font-size: 11px; font-weight: 650; letter-spacing: 0.18em; color: var(--cyan);
+    text-transform: uppercase; margin: 0 0 12px;
+  }
+  .h-title {
+    font-size: 34px; font-weight: 750; letter-spacing: -0.025em; line-height: 1.08; margin:0 0 14px;
+    color: var(--ink-50);
+  }
+  .h-title .accent { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .h-sub { font-size: 15px; line-height: 1.5; color: var(--ink-100); margin:0; max-width: 320px; font-weight: 400; }
+
+  /* Linha visual "Da fala ao próximo passo" */
+  .flowline {
+    height: 2px; width: 100%;
+    background: var(--ink-600);
+    border-radius: 2px; position:relative; margin: 24px 0;
+  }
+  .flowline .fill {
+    position:absolute; left:0; top:0; bottom:0;
+    background: var(--grad);
+    border-radius: 2px;
+  }
+  .flowline .nodes {
+    position:absolute; inset:0; display:flex; justify-content:space-between; align-items:center;
+    pointer-events:none;
+  }
+  .flowline .node {
+    width:10px; height:10px; border-radius:99px;
+    background: var(--ink-900);
+    border: 2px solid var(--ink-600);
+  }
+  .flowline .node.on {
+    background: var(--blue);
+    border-color: var(--blue);
+    box-shadow: 0 0 0 4px rgba(22,140,255,.15);
+  }
+  .flowline .node.on.first { background: var(--violet); border-color: var(--violet); box-shadow: 0 0 0 4px rgba(124,77,255,.18); }
+  .flowline .node.on.last { background: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 0 4px rgba(32,214,244,.18); }
+
+  /* Footer / CTA */
+  .footer {
+    padding: 16px 24px 36px;
+    position:relative; z-index:2;
+  }
+  .footer .dots { justify-content:center; margin-bottom: 20px; }
+  .btn-primary {
+    width:100%; height:52px; border-radius:14px;
+    background: var(--blue); color: var(--white);
+    border:0; cursor:pointer; font:inherit;
+    font-size:16px; font-weight:650;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    transition: background 120ms;
+  }
+  .btn-primary:active { background:#0E76E0; }
+  .btn-primary svg { width:18px; height:18px; }
+  .link-skip {
+    display:block; text-align:center; margin-top:14px;
+    color: var(--ink-300); font-size:14px; font-weight:500;
+    text-decoration:none;
+  }
+
+  /* ───── Screen 1: Welcome — hierarquia reforçada ───── */
+  .s1 .top { display:flex; justify-content:space-between; align-items:center; padding-top:8px; }
+  .s1 .hero { margin-top: 56px; }
+  .s1 .big {
+    font-size: 96px; line-height:0.95; font-weight: 750; letter-spacing:-0.05em;
+    color: var(--ink-50);
+    font-feature-settings: "tnum";
+    text-shadow: 0 2px 24px rgba(22,140,255,.18);
+  }
+  .s1 .big .sep { color: var(--ink-600); margin: 0 8px; font-weight:500; }
+  .s1 .legend {
+    margin-top: 14px; color: var(--ink-200);
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing:0.04em;
+    font-weight: 500;
+    display:flex; align-items:center; gap: 8px;
+  }
+  .s1 .legend .ok { color: var(--cyan); display:inline-block; animation: pulse-dot 2s ease-in-out infinite; }
+  @keyframes pulse-dot { 0%,100% { opacity:1 } 50% { opacity:0.35 } }
+  @media (prefers-reduced-motion: reduce) { .now { animation: none; } }
+  .s1 .pitch {
+    margin-top: auto; margin-bottom: 8px;
+    border-top: 1px solid var(--ink-700);
+    padding-top: 24px;
+  }
+
+  /* ───── Screen 2: Connect CRM — connector com mais presença ───── */
+  .s2 .connector-list { margin-top: 22px; display:flex; flex-direction:column; gap:12px; }
+  .connector {
+    display:flex; align-items:center; gap:14px;
+    background: linear-gradient(180deg, rgba(14,26,51,.95), rgba(14,26,51,.7));
+    border: 1px solid var(--ink-600);
+    border-radius: 16px;
+    padding: 14px 16px;
+    cursor:pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.04), 0 2px 6px rgba(0,0,0,.15);
+    transition: all 200ms cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .connector:active { transform: scale(0.98); }
+  .connector.selected {
+    border-color: var(--blue);
+    background: linear-gradient(180deg, rgba(22,140,255,.12), rgba(14,26,51,.7));
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.06),
+      0 0 0 1px rgba(22,140,255,.3),
+      0 6px 18px rgba(22,140,255,.18);
+  }
+  .connector .logo {
+    width:40px; height:40px; border-radius:10px;
+    background: var(--ink-700);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:13px; color:var(--ink-50);
+    letter-spacing:-0.02em;
+  }
+  .connector .meta { flex:1; min-width:0; }
+  .connector .name { font-size:14px; font-weight:650; color:var(--ink-50); margin:0 0 2px; }
+  .connector .desc { font-size:12px; color:var(--ink-300); margin:0; }
+  .connector .check {
+    width:22px; height:22px; border-radius:99px;
+    border: 1.5px solid var(--ink-600);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .connector.selected .check { background:var(--blue); border-color:var(--blue); }
+  .connector.selected .check svg { color: var(--ink-900); stroke-width: 2.5; }
+  .connector .check svg { width:14px; height:14px; color:transparent; }
+
+  .s2 .h-title { margin-top: 4px; }
+
+  /* ───── Screen 3: First flow ───── */
+  .s3 .steps { margin-top: 22px; display:flex; flex-direction:column; gap:14px; }
+  .step {
+    display:flex; gap:14px; align-items:flex-start;
+    background: linear-gradient(180deg, rgba(14,26,51,.95), rgba(14,26,51,.7));
+    border: 1px solid var(--ink-600);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.04), 0 2px 6px rgba(0,0,0,.15);
+  }
+  .step .num {
+    width:34px; height:34px; border-radius:10px;
+    background: linear-gradient(135deg, rgba(124,77,255,.25), rgba(22,140,255,.25));
+    border: 1px solid rgba(22,140,255,.35);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--cyan); font-size:13px; font-weight:700; font-family:'IBM Plex Mono', monospace;
+    flex-shrink:0;
+    box-shadow: 0 2px 8px rgba(22,140,255,.2);
+  }
+  .step .body .k { font-size:16px; font-weight:700; color:var(--ink-50); margin:0 0 4px; letter-spacing:-0.012em; }
+  .step .body .v { font-size:13px; color:var(--ink-200); margin:0; line-height:1.5; }
+
+  .s3 .meta-row {
+    margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--ink-600);
+    display:flex; gap:18px;
+    font-family:'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-300);
+    font-weight: 500;
+  }
+  .s3 .meta-row span b { color: var(--ink-50); font-weight: 600; }
+
+  .small-link {
+    font-size: 12px; color: var(--blue); text-decoration: none; font-weight: 600;
+    padding: 6px 10px; border-radius: 8px;
+    background: rgba(22,140,255,.08);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>doniq · Onboarding</h1>
+      <h2>3 telas · 390 × 844</h2>
+    </div>
+    <div class="meta">ink-900 #071225 · blue #168CFF · grad violet→blue→cyan · inter 650–750</div>
+  </header>
+
+  <div class="row">
+
+    <!-- ───── Screen 1 ───── -->
+    <div class="frame s1">
+      <div class="status">
+        <span>9:41</span>
+        <span class="right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M12 20h.01"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2"/></svg>
+        </span>
+      </div>
+
+      <div class="content">
+        <div class="top">
+          <span class="wm">doni<span class="q">q</span></span>
+          <span class="small-link">Pular</span>
+        </div>
+
+        <div class="hero">
+          <div class="big">7<span class="sep">·</span>set</div>
+          <div class="legend"><span class="ok">●</span>&nbsp; agora · rota zona sul de SP</div>
+        </div>
+
+        <div class="flowline">
+          <div class="fill" style="width:14%"></div>
+          <div class="nodes">
+            <span class="node on first"></span>
+            <span class="node"></span>
+            <span class="node"></span>
+          </div>
+        </div>
+
+        <div class="pitch">
+          <h2 class="h-title">Conte como foi.<br/>Confira o relatório.<br/><span class="accent">Siga o dia.</span></h2>
+          <p class="h-sub">Você fala sobre a visita como já sabe falar. O doniq transforma esse relato em relatório pronto para conferir — sem reconstruir nada depois.</p>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="dots"><span class="on"></span><span></span><span></span></div>
+        <button class="btn-primary">Começar
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+        <a class="link-skip" href="#">Já tenho conta</a>
+      </div>
+    </div>
+
+    <!-- ───── Screen 2 ───── -->
+    <div class="frame s2">
+      <div class="status">
+        <span>9:41</span>
+        <span class="right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M12 20h.01"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2"/></svg>
+        </span>
+      </div>
+
+      <div class="content">
+        <div class="top">
+          <span class="wm">doni<span class="q">q</span></span>
+          <span class="small-link">Pular</span>
+        </div>
+
+        <p class="h-eyebrow">Conectar CRM</p>
+        <h2 class="h-title">Conecte seu CRM.</h2>
+        <p class="h-sub">Sincronizamos clientes e oportunidades. Você continua registrando pelo app — o relatório chega pronto onde sua equipe já trabalha.</p>
+
+        <div class="connector-list">
+          <div class="connector selected">
+            <div class="logo">SF</div>
+            <div class="meta">
+              <p class="name">Salesforce</p>
+              <p class="desc">3 contas · 412 leads</p>
+            </div>
+            <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </div>
+
+          <div class="connector">
+            <div class="logo">HS</div>
+            <div class="meta">
+              <p class="name">HubSpot</p>
+              <p class="desc">Pipeline de vendas</p>
+            </div>
+            <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </div>
+
+          <div class="connector">
+            <div class="logo">RD</div>
+            <div class="meta">
+              <p class="name">RD Station</p>
+              <p class="desc">Funil e leads</p>
+            </div>
+            <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </div>
+
+          <div class="connector">
+            <div class="logo">+</div>
+            <div class="meta">
+              <p class="name">Outro CRM</p>
+              <p class="desc">Via webhook ou CSV</p>
+            </div>
+            <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="dots"><span></span><span class="on"></span><span></span></div>
+        <button class="btn-primary">Conectar Salesforce
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+        <a class="link-skip" href="#">Fazer isso depois</a>
+      </div>
+    </div>
+
+    <!-- ───── Screen 3 ───── -->
+    <div class="frame s3">
+      <div class="status">
+        <span>9:41</span>
+        <span class="right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M12 20h.01"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2"/></svg>
+        </span>
+      </div>
+
+      <div class="content">
+        <div class="top">
+          <span class="wm">doni<span class="q">q</span></span>
+        </div>
+
+        <p class="h-eyebrow">Primeira visita</p>
+        <h2 class="h-title">Fale sobre o que aconteceu.</h2>
+        <p class="h-sub">Depois da visita, abra o doniq e conte. Você confere o relatório antes de seguir.</p>
+
+        <div class="flowline">
+          <div class="fill" style="width:100%"></div>
+          <div class="nodes">
+            <span class="node on first"></span>
+            <span class="node on"></span>
+            <span class="node on last"></span>
+          </div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <span class="num">01</span>
+            <div class="body">
+              <p class="k">Falar</p>
+              <p class="v">Conte a visita em uma frase ou em cinco minutos. Como preferir.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="num">02</span>
+            <div class="body">
+              <p class="k">Revisar</p>
+              <p class="v">Confira o relatório — clientes, contexto e próximos passos.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="num">03</span>
+            <div class="body">
+              <p class="k">Feito</p>
+              <p class="v">Copie, compartilhe ou exporte. O dia segue.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="meta-row">
+          <span><b>00:00:47</b> · em média por visita</span>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="dots"><span></span><span></span><span class="on"></span></div>
+        <button class="btn-primary">Iniciar primeira visita
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

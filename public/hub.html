@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doniq · Central de Demonstrações & Protótipos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #030817;
+      --card-bg: #071225;
+      --card-border: #152544;
+      --card-hover: #1E2F55;
+      --cyan: #20D6F4;
+      --blue: #168CFF;
+      --violet: #7C4DFF;
+      --emerald: #3DBA8C;
+      --amber: #E8A547;
+      --text: #F5F8FC;
+      --muted: #7A8AA8;
+      --sub: #A4B0C7;
+      --grad: linear-gradient(90deg, #7C4DFF 0%, #168CFF 50%, #20D6F4 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 40px 24px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    /* Top Brand & Header */
+    header {
+      margin-bottom: 40px;
+      text-align: left;
+    }
+
+    .brand-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: rgba(32, 214, 244, 0.08);
+      border: 1px solid rgba(32, 214, 244, 0.25);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--cyan);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
+      animation: pulse-dot 1.5s infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    h1 span {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--sub);
+      max-width: 680px;
+      line-height: 1.6;
+    }
+
+    /* Section Grid */
+    .section-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--cyan);
+      margin: 36px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--card-border);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      border-color: var(--cyan);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.6), 0 0 24px -6px rgba(32, 214, 244, 0.2);
+    }
+
+    .card-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+      align-self: flex-start;
+    }
+    .badge-core { background: rgba(32, 214, 244, 0.12); color: var(--cyan); border: 1px solid rgba(32, 214, 244, 0.3); }
+    .badge-b2b { background: rgba(124, 77, 255, 0.15); color: #B794F6; border: 1px solid rgba(124, 77, 255, 0.35); }
+    .badge-banca { background: rgba(16, 185, 129, 0.12); color: var(--emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    .card-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid var(--card-border);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--cyan);
+      font-weight: 600;
+    }
+
+    .card-footer span.arrow {
+      transition: transform 0.2s;
+    }
+    .card:hover .card-footer span.arrow {
+      transform: translateX(4px);
+    }
+
+    /* System Status Bar */
+    .system-status {
+      margin-top: 48px;
+      padding: 20px;
+      border-radius: 16px;
+      background: #060b1b;
+      border: 1px solid var(--card-border);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--sub);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .status-item strong {
+      color: #fff;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      body { padding: 24px 16px 60px; }
+      h1 { font-size: 26px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Top Header -->
+    <header>
+      <div class="brand-tag">
+        <span class="pulse"></span>
+        <span>Doniq · Demonstrações Ativas</span>
+      </div>
+      <h1>Central de <span>Protótipos & Telas</span></h1>
+      <p class="subtitle">
+        Acesse os simuladores interativos e os protótipos canônicos da banca com craft visual preservado, tipografia Inter e zero dependência de compilação externa.
+      </p>
+    </header>
+
+    <!-- Seção 1: Núcleo Operacional & Mobile Core -->
+    <div class="section-title">Nível 1 & 2 · Vendedor em Campo</div>
+    <div class="grid">
+      
+      <!-- Simulador Mobile v1.5 -->
+      <a href="/simulador.html" class="card">
+        <div class="card-badge badge-core">Autônomo · CSS Puro</div>
+        <div class="card-icon">🚗</div>
+        <div class="card-title">
+          <span>Simulador Modo Carro v1.5</span>
+          <span>↗</span>
+        </div>
+        <div class="card-desc">
+          Touchpad massivo de 160px para gravação rápida ao entrar no carro, waveform animada, revisão em 5s com chips de 1 toque e tela estática com gamificação de tempo economizado (~15 min).
+        </div>
+        <div class="card-footer">
+          <span>Abrir Simulador Interativo</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <!-- Simulador Mobile React Page -->
+      <a href="/demo/mobile" class="card">
+        <div class="card-badge badge-core">React Component</div>
+        <div class="card-icon">📱</div>
+        <div class="card-title">
+          <span>App Demo (/demo/mobile)</span>
+          <span>↗</span>
+        </div>
+        <div class="card-desc">
+          A versão integrada ao ecossistema React/Vite com chaveamento de abas, persistência no estado e simulação de envio de dados para o CRM.
+        </div>
+        <div class="card-footer">
+          <span>Acessar Rota React</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <!-- Home & Flowline -->
+      <a href="/design-fase1/dashboard/home.html" class="card">
+        <div class="card-badge badge-core">Design Fase 1</div>
+        <div class="card-icon">⚡</div>
+        <div class="card-title">
+          <span>Home & Flowline</span>
+          <span>↗</span>
+        </div>
+        <div class="card-desc">
+          Esteira de visitas do dia, estado da fila offline, indicador de sincronização e histórico rápido das interações da equipe.
+        </div>
+        <div class="card-footer">
+          <span>Ver Tela de Home</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Seção 2: Expansão B2B & Gestão -->
+    <div class="section-title">Nível 3 · Gestão & Expansão B2B</div>
+    <div class="grid">
+
+      <!-- Página de Gestão B2B -->
+      <a href="/gestao" class="card">
+        <div class="card-badge badge-b2b">Motor de Expansão B2B</div>
+        <div class="card-icon">👔</div>
+        <div class="card-title">
+          <span>Página de Gestão (/gestao)</span>
+          <span>↗</span>
+        </div>
+        <div class="card-desc">
+          Landing page corporativa para gestores e diretores de vendas. Inclui o Pacto de Privacidade (gestor nunca ouve o áudio bruto do vendedor) e demo do radar de objeções.
+        </div>
+        <div class="card-footer">
+          <span>Abrir Portal de Gestão</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <!-- Lista & Histórico com Objeções -->
+      <a href="/design-fase1/lista/lista.html" class="card">
+        <div class="card-badge badge-b2b">Inteligência Comercial</div>
+        <div class="card-icon">📊</div>
+        <div class="card-title">
+          <span>Histórico & Objeções</span>
+          <span>↗</span>
+        </div>
+        <div class="card-desc">
+          Listagem com busca sem acento, chips de temperatura comercial (quente, morna, fria) e consolidação das dores reportadas pelos clientes.
+        </div>
+        <div class="card-footer">
+          <span>Abrir Lista de Relatos</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <!-- Landing Page Principal V6.2 -->
+      <a href="/" class="card">
+        <div class="card-badge badge-b2b">Página Inicial</div>
+        <div class="card-icon">🌐</div>
+        <div class="card-title">
+          <span>Landing Page Principal V6.2</span>
+          <span>↗</span>
+        </div>
+        <div class="card-desc">
+          Apresentação da solução completa com Motion, seletor de ramos, gravador A/B demonstrativo e gatilhos de conversão.
+        </div>
+        <div class="card-footer">
+          <span>Ver Landing Page</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Seção 3: Protótipos Canônicos da Banca -->
+    <div class="section-title">Design Fase 1 · Veredito & Protótipos GSAP</div>
+    <div class="grid">
+
+      <!-- Protótipo GSAP Oficial -->
+      <a href="/design-fase1/prototipo-navegavel.html" class="card">
+        <div class="card-badge badge-banca">GSAP 3.13 Auto-Play</div>
+        <div class="card-icon">🎬</div>
+        <div class="card-title">
+          <span>Protótipo Navegável Oficial</span>
+          <span>↗</span>
+        </div>
+        <div class="card-desc">
+          Protótipo com auto-reprodução de todo o ciclo: toque de voz, transcrição com typewriter, revisão rápida e persistência no banco local.
+        </div>
+        <div class="card-footer">
+          <span>Executar Protótipo GSAP</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <!-- Veredito Dark Mode -->
+      <a href="/design-fase1/banca/v1.5-repouso-contido.html" class="card">
+        <div class="card-badge badge-banca">Repouso Contido</div>
+        <div class="card-icon">🌙</div>
+        <div class="card-title">
+          <span>Veredito v1.5 Dark Mode</span>
+          <span>↗</span>
+        </div>
+        <div class="card-desc">
+          Design auditado para ambientes veiculares e poupança de bateria. Cores ink navy, superfícies em camadas e alto contraste ergonômico.
+        </div>
+        <div class="card-footer">
+          <span>Ver Veredito Dark</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <!-- Veredito Light Mode Soft Ice -->
+      <a href="/design-fase1/light/v1.5-light.html" class="card">
+        <div class="card-badge badge-banca">Soft Ice</div>
+        <div class="card-icon">☀️</div>
+        <div class="card-title">
+          <span>Veredito v1.5 Light Mode</span>
+          <span>↗</span>
+        </div>
+        <div class="card-desc">
+          Variante suave Soft Ice, ideal para vendedores externos usando o dispositivo sob luz solar direta no meio da rua.
+        </div>
+        <div class="card-footer">
+          <span>Ver Veredito Light</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Rodapé de Status do Servidor -->
+    <div class="system-status">
+      <div class="status-item">
+        <span class="pulse"></span>
+        <span>Servidor: <strong>Vite 7.3.2 (Porta 5173)</strong></span>
+      </div>
+      <div class="status-item">
+        <span>Tailwind v4: <strong>@import ativo em styles.css</strong></span>
+      </div>
+      <div class="status-item">
+        <span>SQLite Local: <strong>relato-queue.db</strong></span>
+      </div>
+      <div class="status-item">
+        <span>Repositório: <strong>zearins-a11y/doniq-app</strong></span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

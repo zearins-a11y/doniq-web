@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#F5F8FC" />
+    <script>
+      // Antes da primeira pintura: evita o flash de tela clara para quem
+      // escolheu o escuro. A escolha explícita mora em localStorage.
+      try {
+        var t = localStorage.getItem("relato_tema");
+        if (t === "claro" || t === "escuro") {
+          document.documentElement.setAttribute("data-tema", t);
+        }
+        var escuro = t === "escuro" || (!t && matchMedia("(prefers-color-scheme: dark)").matches);
+        if (escuro) {
+          document.querySelector('meta[name="theme-color"]').setAttribute("content", "#030817");
+        }
+      } catch (e) {}
+    </script>
+    <meta
+      name="description"
+      content="Doniq — assistente pós-visita para equipes em campo. Fale sobre a visita, revise o registro e conclua."
+    />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="doniq" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/marca/doniq-app-icon.svg" />
+    <meta property="og:image" content="/og-image.png" />
+    <title>doniq — Falou, tá feito.</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/web/main.tsx"></script>
+  </body>
+</html>

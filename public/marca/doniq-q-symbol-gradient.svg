@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Símbolo q da Doniq</title>
+  <desc id="desc">Um q aberto, construído como um ciclo que se transforma em próximo passo.</desc>
+  <defs>
+    <linearGradient id="q" x1="51" y1="211" x2="218" y2="42" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7C4DFF"/>
+      <stop offset="0.52" stop-color="#168CFF"/>
+      <stop offset="1" stop-color="#20D6F4"/>
+    </linearGradient>
+  </defs>
+  <path d="M164 178A82 82 0 1 1 198 112" fill="none" stroke="url(#q)" stroke-width="30" stroke-linecap="round"/>
+  <path d="m164 178 23 44" fill="none" stroke="url(#q)" stroke-width="30" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" role="img" aria-labelledby="title">
+  <title id="title">doniq</title>
+  <g transform="translate(12 4)" fill="none" stroke="#FFFFFF" stroke-width="13" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="46" cy="66" r="31"/><path d="M77 18v48"/><circle cx="132" cy="66" r="31"/>
+    <path d="M184 96V62c0-17 11-27 27-27 17 0 28 11 28 28v33M273 39v57"/>
+    <circle cx="273" cy="18" r="7" fill="#FFFFFF" stroke="none"/>
+    <path d="M348 91A31 31 0 1 1 360 66M348 90l14 22"/>
+  </g>
+</svg>

@@ -1,0 +1,1047 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1700" />
+<title>doniq · Alternativa · O Repouso Fluido</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;650;700;750&family=Inter:wght@400;500;600;650;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ─────────────────────────────────────────────────────────────
+     Design system oficial do doniq, versão "O Repouso Fluido"
+     Movimento · Plasticidade · Intuitividade · Conforto visual
+     ───────────────────────────────────────────────────────────── */
+  :root {
+    --ink-950:#030817; --ink-900:#071225; --ink-800:#0E1A33; --ink-700:#152544;
+    --ink-600:#1E2F55; --ink-500:#243A66; --ink-400:#2E4878;
+    --ink-300:#7A8AA8; --ink-200:#A4B0C7; --ink-100:#C9D3E3; --ink-50:#F5F8FC;
+    --blue:#168CFF; --cyan:#20D6F4; --violet:#7C4DFF;
+    --positive:#3DBA8C; --warn:#E8A547; --critical:#E5484D;
+    --grad: linear-gradient(90deg, #7C4DFF 0%, #168CFF 50%, #20D6F4 100%);
+    --grad-soft: linear-gradient(135deg, rgba(124,77,255,.22), rgba(22,140,255,.18), rgba(32,214,244,.16));
+    /* OKLCH derived tints */
+    --tint-blue: oklch(from var(--blue) l c h / 0.16);
+    --tint-violet: oklch(from var(--violet) l c h / 0.18);
+    --tint-cyan: oklch(from var(--cyan) l c h / 0.16);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { background: #02050B; }
+  body {
+    margin:0;
+    font-family:'Inter', system-ui, sans-serif;
+    color:var(--ink-50);
+    min-height:100vh;
+    padding: 56px 32px 80px;
+    -webkit-font-smoothing:antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .wrap { max-width: 1640px; margin:0 auto; }
+
+  /* Header */
+  header { margin-bottom: 36px; }
+  h1 {
+    font-size: 12px; font-weight: 500; letter-spacing: 0.18em;
+    color: var(--cyan); text-transform: uppercase; margin: 0 0 10px;
+  }
+  h2 {
+    font-size: 40px; font-weight: 700; letter-spacing: -0.025em;
+    margin: 0 0 12px; line-height: 1.05;
+  }
+  h2 .accent { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lede {
+    color: var(--ink-200); font-size: 16px; line-height: 1.55;
+    max-width: 720px; margin: 0 0 16px;
+  }
+  .tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+  .tag {
+    font-family:'IBM Plex Mono', monospace; font-size: 11px;
+    padding: 5px 10px; border-radius: 99px;
+    background: rgba(22,140,255,.12); color: var(--ink-100);
+    border: 1px solid rgba(22,140,255,.25);
+  }
+  .tag.warn { background: rgba(232,165,71,.12); border-color: rgba(232,165,71,.3); color: var(--warn); }
+  .tag.positive { background: rgba(61,186,140,.14); border-color: rgba(61,186,140,.3); color: var(--positive); }
+
+  /* Row de frames */
+  .frames {
+    display: grid;
+    grid-template-columns: repeat(4, 390px);
+    gap: 36px;
+    margin-top: 36px;
+  }
+
+  /* Frame base */
+  .frame {
+    width: 390px; height: 844px;
+    background: var(--ink-900);
+    border-radius: 44px;
+    border: 1px solid #15203a;
+    overflow: hidden;
+    position: relative;
+    display: flex; flex-direction: column;
+    box-shadow: 0 30px 80px rgba(0,0,0,.55);
+    flex-shrink: 0;
+    isolation: isolate;
+  }
+
+  /* Malha tonal orgânica — base de conforto visual */
+  .mesh {
+    position: absolute; inset: -10%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(35% 28% at 18% 22%, rgba(124,77,255,.22), transparent 70%),
+      radial-gradient(30% 25% at 82% 18%, rgba(22,140,255,.18), transparent 70%),
+      radial-gradient(28% 22% at 65% 82%, rgba(32,214,244,.14), transparent 70%);
+    animation: mesh-drift 28s ease-in-out infinite alternate;
+  }
+  @keyframes mesh-drift {
+    0%   { transform: translate3d(0,0,0) scale(1); }
+    50%  { transform: translate3d(-3%,2%,0) scale(1.04); }
+    100% { transform: translate3d(2%,-2%,0) scale(1.02); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mesh { animation: none; }
+  }
+
+  /* Granulado sutil — sensação tátil de papel/pixel */
+  .grain {
+    position:absolute; inset:0; z-index: 1; pointer-events:none; opacity:.04;
+    background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0);
+    background-size: 3px 3px;
+  }
+
+  .status {
+    height: 54px; padding: 18px 28px 0;
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:15px; font-weight:600;
+    position:relative; z-index:3;
+  }
+  .status .right { display:flex; gap:6px; align-items:center; }
+  .status svg { width:16px; height:16px; color:var(--ink-50); }
+
+  /* Frame labels */
+  .frame-label {
+    position:absolute; top: -28px; left: 0; right: 0;
+    text-align: center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: 0.12em;
+    color: var(--ink-300); text-transform: uppercase;
+  }
+  .frame-label b { color: var(--cyan); font-weight: 500; }
+
+  /* ─────────────────────────────────────────────────────────────
+     FRAME 1 — Idle (estado de repouso)
+     ───────────────────────────────────────────────────────────── */
+  .idle .content {
+    position: relative; z-index: 3;
+    padding: 8px 22px 0;
+    display:flex; flex-direction:column;
+    flex:1;
+  }
+  .top-bar { display:flex; justify-content:space-between; align-items:center; padding: 12px 0 4px; }
+  .wm {
+    font-family:'Inter Tight', sans-serif;
+    font-weight: 700; font-size: 22px; letter-spacing: -0.045em;
+    color: var(--ink-50); display: inline-flex; align-items: baseline;
+  }
+  .wm .q {
+    background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+    display: inline-block;
+  }
+  .avatar {
+    width: 36px; height: 36px; border-radius: 99px;
+    background: linear-gradient(135deg, #1a2a4a, #243A66);
+    border: 1px solid var(--ink-500);
+    color: var(--ink-50); font-size: 12px; font-weight: 650;
+    display:flex; align-items:center; justify-content:center;
+    letter-spacing: -0.02em;
+  }
+
+  /* Hero — número grande */
+  .hero { padding: 24px 0 8px; }
+  .hero .meta {
+    font-family:'IBM Plex Mono', monospace; font-size: 11px;
+    color: var(--ink-300); margin-bottom: 12px; letter-spacing: 0.04em;
+  }
+  .hero .meta .now { color: var(--cyan); display: inline-block; animation: pulse-dot 2s ease-in-out infinite; }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+  .num {
+    font-family:'Inter Tight', sans-serif;
+    font-size: 88px; line-height: 0.92; font-weight: 700; letter-spacing: -0.045em;
+    color: var(--ink-50); font-feature-settings: "tnum";
+  }
+  .num .sep { color: var(--ink-600); margin: 0 8px; font-weight: 500; }
+  .num .small { font-size: 32px; color: var(--ink-300); font-weight: 500; letter-spacing: -0.01em; margin-left: 14px; }
+  .legend {
+    color: var(--ink-100); font-size: 15px; margin-top: 14px;
+    line-height: 1.5; max-width: 320px;
+  }
+  .legend b { color: var(--ink-50); font-weight: 650; }
+
+  /* Linha fluida (curva orgânica) — substitui a barra reta */
+  .flow {
+    margin-top: 30px;
+    position: relative;
+    height: 56px;
+  }
+  .flow svg { width: 100%; height: 100%; overflow: visible; }
+  .flow .label {
+    position:absolute; top: 0; left: 0; right: 0;
+    display: flex; justify-content: space-between;
+    font-family:'IBM Plex Mono', monospace; font-size: 10px;
+    color: var(--ink-300); letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .flow .label .on { color: var(--cyan); }
+  .flow .path {
+    fill: none; stroke: url(#grad-flow); stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-dasharray: 600; stroke-dashoffset: 260;
+    filter: drop-shadow(0 0 6px rgba(22,140,255,.4));
+    animation: flow-draw 4s ease-in-out infinite;
+  }
+  @keyframes flow-draw {
+    0%, 100% { stroke-dashoffset: 260; }
+    50% { stroke-dashoffset: 0; }
+  }
+  .flow .node {
+    fill: var(--ink-900);
+    stroke: var(--ink-600);
+    stroke-width: 2;
+  }
+  .flow .node.on.first { fill: var(--violet); stroke: var(--violet); filter: drop-shadow(0 0 6px rgba(124,77,255,.6)); }
+  .flow .node.on.mid { fill: var(--blue); stroke: var(--blue); filter: drop-shadow(0 0 6px rgba(22,140,255,.6)); }
+  .flow .node.on.last { fill: var(--ink-700); stroke: var(--ink-600); }
+
+  /* Cards de visitas com cantos assimétricos */
+  .visits { margin-top: 24px; }
+  .visits-head {
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom: 14px;
+  }
+  .visits-head h3 {
+    margin:0; font-size: 18px; font-weight: 650; letter-spacing: -0.015em;
+    color: var(--ink-50);
+  }
+  .visits-head .more {
+    font-size: 13px; font-weight: 500; color: var(--blue); text-decoration: none;
+  }
+
+  .visit-card {
+    background: linear-gradient(180deg, rgba(14,26,51,.85), rgba(14,26,51,.55));
+    border: 1px solid var(--ink-500);
+    /* cantos assimétricos — quebra o grid perfeito */
+    border-radius: 22px 14px 14px 14px;
+    padding: 16px;
+    margin-top: 12px;
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    transition: transform 220ms cubic-bezier(0.2,0.8,0.2,1), border-color 220ms;
+  }
+  .visit-card:first-child { margin-top: 0; }
+  .visit-card.live {
+    border-color: rgba(22,140,255,.5);
+    background: linear-gradient(180deg, rgba(22,140,255,.08), rgba(14,26,51,.55)), var(--ink-800);
+  }
+  .visit-card .row1 {
+    display:flex; justify-content:space-between; align-items:flex-start; gap: 12px;
+  }
+  .visit-card .name {
+    font-size: 16px; font-weight: 650; color: var(--ink-50); margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .visit-card .company {
+    font-size: 13px; color: var(--ink-300); margin: 4px 0 0;
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 22px; padding: 0 10px; border-radius: 99px;
+    font-size: 11px; font-weight: 650; letter-spacing: 0.02em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+  }
+  .chip .dot { width: 6px; height: 6px; border-radius: 99px; background: currentColor; }
+  .chip.pending { background: rgba(232,165,71,.14); color: var(--warn); }
+  .chip.done { background: rgba(61,186,140,.14); color: var(--positive); }
+  .chip.live {
+    background: rgba(22,140,255,.16); color: var(--blue);
+    border-color: rgba(22,140,255,.3);
+  }
+  .chip.live .dot { animation: pulse-dot 1.6s ease-in-out infinite; }
+
+  .visit-card .row2 {
+    margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--ink-600);
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink-300);
+  }
+  .visit-card .row2 .meta b { color: var(--ink-50); font-weight: 500; }
+  .visit-card .row2 .dist { display: flex; align-items: center; gap: 6px; }
+  .visit-card .row2 .dist svg { width: 14px; height: 14px; }
+
+  /* FAB primário — forma plástica */
+  .fab-wrap {
+    position: absolute; left: 0; right: 0; bottom: 96px;
+    display:flex; justify-content:center; z-index: 4;
+  }
+  .fab {
+    width: 72px; height: 72px; border-radius: 99px;
+    background: var(--grad);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:
+      0 16px 40px rgba(22,140,255,.4),
+      0 0 0 4px var(--ink-900),
+      inset 0 0 0 1px rgba(255,255,255,.08);
+    cursor: pointer;
+    /* plasticidade: pílula se deforma em idle pulse */
+    animation: fab-pulse 2.4s ease-in-out infinite;
+    transition: transform 200ms cubic-bezier(0.2,0.8,0.2,1);
+  }
+  @keyframes fab-pulse {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.06) rotate(0.5deg); }
+  }
+  .fab::before {
+    content:""; position:absolute; inset:-2px;
+    border-radius: 99px;
+    background: var(--grad);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 200ms;
+  }
+  .fab:active::before { opacity: 0.8; }
+  .fab svg { width: 30px; height: 30px; color: white; stroke-width: 2; }
+
+  /* Tab bar */
+  .tabbar {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    height: 84px;
+    background: linear-gradient(180deg, rgba(7,18,37,0), rgba(7,18,37,.92) 25%, var(--ink-900));
+    border-top: 1px solid var(--ink-600);
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    align-items: end;
+    padding-bottom: 18px;
+    z-index: 3;
+  }
+  .tab {
+    display:flex; flex-direction:column; align-items:center; gap:4px;
+    color: var(--ink-300);
+    cursor: pointer;
+    position:relative;
+  }
+  .tab svg { width: 22px; height: 22px; }
+  .tab .lbl { font-size: 11px; font-weight: 500; opacity: 0; transition: opacity 200ms; }
+  .tab.active { color: var(--blue); }
+  .tab.active .lbl { opacity: 1; font-weight: 650; }
+  .tab.active::before {
+    content:""; position:absolute; top: -8px; left: 50%; transform: translateX(-50%);
+    width: 28px; height: 3px; border-radius: 99px;
+    background: var(--grad);
+    box-shadow: 0 0 8px rgba(22,140,255,.6);
+  }
+
+  /* ─────────────────────────────────────────────────────────────
+     FRAME 2 — Recording (full-bleed morph do FAB)
+     ───────────────────────────────────────────────────────────── */
+  .rec .overlay {
+    position:absolute; inset:0; z-index: 6;
+    background: radial-gradient(80% 60% at 50% 30%, rgba(22,140,255,.22), transparent 65%);
+    pointer-events: none;
+    animation: overlay-breath 3s ease-in-out infinite;
+  }
+  @keyframes overlay-breath {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.04); }
+  }
+  .rec .record-panel {
+    position:absolute; inset: 0;
+    z-index: 7;
+    display:flex; flex-direction:column;
+    padding: 60px 28px 40px;
+    background: radial-gradient(120% 80% at 50% 0%, rgba(124,77,255,.18), transparent 60%);
+  }
+  .rec-top {
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'IBM Plex Mono', monospace; font-size: 11px;
+    color: var(--ink-300); letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .rec-top .live-tag {
+    display:flex; align-items:center; gap: 6px;
+    color: var(--cyan); font-weight: 650;
+  }
+  .rec-top .live-tag .dot {
+    width: 8px; height: 8px; border-radius: 99px; background: var(--cyan);
+    box-shadow: 0 0 0 4px rgba(32,214,244,.2);
+    animation: pulse-dot 1.4s ease-in-out infinite;
+  }
+
+  .rec-middle {
+    flex: 1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap: 28px; padding: 20px 0;
+  }
+  .rec .timer {
+    font-family:'Inter Tight', sans-serif;
+    font-size: 64px; font-weight: 700; letter-spacing: -0.04em;
+    color: var(--ink-50); font-feature-settings: "tnum";
+  }
+  .rec .timer .ms { color: var(--cyan); font-size: 36px; font-weight: 500; }
+  .rec .phrase {
+    color: var(--ink-100); font-size: 14px; max-width: 280px;
+    text-align: center; line-height: 1.5;
+  }
+
+  /* Waveform SVG animada */
+  .wave {
+    width: 100%; max-width: 320px; height: 80px;
+  }
+  .wave path {
+    fill: none; stroke: url(#wave-grad); stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Blob pulsante do botão stop */
+  .stop-btn {
+    width: 80px; height: 80px; border-radius: 99px;
+    background: var(--grad);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 16px 48px rgba(22,140,255,.5), inset 0 0 0 1px rgba(255,255,255,.12);
+    cursor: pointer;
+    position:relative;
+    animation: blob-breath 1.6s ease-in-out infinite;
+  }
+  @keyframes blob-breath {
+    0%, 100% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(1.08); filter: brightness(1.15); }
+  }
+  .stop-btn::before, .stop-btn::after {
+    content:""; position:absolute; inset:0;
+    border-radius: 99px;
+    background: var(--grad); opacity: 0.4;
+    z-index:-1;
+  }
+  .stop-btn::before {
+    animation: ring 2s ease-out infinite;
+  }
+  .stop-btn::after {
+    animation: ring 2s ease-out infinite .7s;
+  }
+  @keyframes ring {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.8); opacity: 0; }
+  }
+  .stop-btn .sq {
+    width: 22px; height: 22px; border-radius: 6px;
+    background: white;
+  }
+
+  .rec-foot {
+    display:flex; flex-direction:column; align-items:center; gap: 10px;
+    color: var(--ink-300); font-size: 13px;
+  }
+  .rec-foot kbd {
+    font-family:'IBM Plex Mono', monospace; font-size: 11px;
+    background: var(--ink-800); border: 1px solid var(--ink-600);
+    padding: 3px 8px; border-radius: 6px; color: var(--ink-100);
+  }
+
+  /* ─────────────────────────────────────────────────────────────
+     FRAME 3 — Processing (chips de IA aparecendo)
+     ───────────────────────────────────────────────────────────── */
+  .proc .processing-card {
+    position:relative; z-index: 5;
+    margin: 60px 22px 0;
+    padding: 22px 22px 24px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(14,26,51,.88), rgba(7,18,37,.94));
+    border: 1px solid var(--ink-500);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  }
+  .proc .processing-card .head {
+    display:flex; align-items:center; gap:10px;
+    font-family:'IBM Plex Mono', monospace; font-size: 11px;
+    color: var(--ink-300); letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .proc .processing-card .head .ai-orb {
+    width: 14px; height: 14px; border-radius: 99px;
+    background: var(--grad);
+    box-shadow: 0 0 0 4px rgba(22,140,255,.18);
+    animation: pulse-dot 1.4s ease-in-out infinite;
+  }
+  .proc .processing-card h2 {
+    margin: 14px 0 6px;
+    font-size: 22px; font-weight: 650; letter-spacing: -0.015em; line-height: 1.2;
+    color: var(--ink-50);
+  }
+  .proc .processing-card .sub {
+    color: var(--ink-200); font-size: 13px; line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Chips de extração aparecendo em sequência */
+  .extracts {
+    margin-top: 22px;
+    display:flex; flex-direction:column; gap: 10px;
+  }
+  .extract {
+    display:flex; align-items:center; gap: 12px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: rgba(22,140,255,.06);
+    border: 1px solid rgba(22,140,255,.18);
+    animation: chip-in 600ms cubic-bezier(0.2,0.8,0.2,1) backwards;
+  }
+  .extract:nth-child(1) { animation-delay: 200ms; }
+  .extract:nth-child(2) { animation-delay: 700ms; }
+  .extract:nth-child(3) { animation-delay: 1200ms; }
+  .extract:nth-child(4) { animation-delay: 1700ms; }
+  .extract:nth-child(5) { animation-delay: 2200ms; }
+  @keyframes chip-in {
+    from { opacity: 0; transform: translateY(12px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .extract .ico {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--ink-800);
+    border: 1px solid var(--ink-600);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .extract .ico svg { width: 14px; height: 14px; color: var(--cyan); }
+  .extract .body { flex: 1; min-width: 0; }
+  .extract .k {
+    font-size: 11px; font-weight: 650; letter-spacing: 0.06em;
+    color: var(--ink-300); text-transform: uppercase; margin: 0 0 2px;
+  }
+  .extract .v {
+    font-size: 13px; font-weight: 500; color: var(--ink-50); margin: 0;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+
+  .proc-foot {
+    margin: 24px 22px 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--ink-600);
+    display:flex; justify-content:space-between; align-items:center;
+    color: var(--ink-300); font-size: 13px;
+    position:relative; z-index:5;
+  }
+  .proc-foot b { color: var(--cyan); font-weight: 500; font-family: 'IBM Plex Mono', monospace; }
+
+  /* ─────────────────────────────────────────────────────────────
+     FRAME 4 — Done (linha completa + estado de sucesso)
+     ───────────────────────────────────────────────────────────── */
+  .done .done-card {
+    position:relative; z-index: 5;
+    margin: 60px 22px 0;
+    padding: 24px 22px;
+    border-radius: 26px;
+    background: linear-gradient(180deg, rgba(32,214,244,.08), rgba(14,26,51,.85));
+    border: 1px solid rgba(32,214,244,.25);
+    box-shadow: 0 0 40px rgba(32,214,244,.1);
+  }
+  .done .check-ring {
+    width: 56px; height: 56px; border-radius: 99px;
+    background: var(--grad);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 0 0 6px rgba(32,214,244,.12), 0 12px 32px rgba(22,140,255,.35);
+    margin-bottom: 16px;
+    animation: check-pop 600ms cubic-bezier(0.2,0.8,0.2,1);
+  }
+  @keyframes check-pop {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .done .check-ring svg { width: 28px; height: 28px; color: white; stroke-width: 2.5; }
+
+  .done h2 {
+    margin: 0 0 6px;
+    font-size: 24px; font-weight: 700; letter-spacing: -0.02em;
+    line-height: 1.15; color: var(--ink-50);
+  }
+  .done .sub {
+    color: var(--ink-100); font-size: 14px; line-height: 1.5;
+    margin: 0 0 20px;
+  }
+
+  /* Flowline completa */
+  .done .flow.complete {
+    height: 56px; margin: 22px -4px 24px;
+  }
+  .done .flow.complete .path {
+    stroke-dashoffset: 0 !important;
+    filter: drop-shadow(0 0 8px rgba(32,214,244,.5));
+  }
+  .done .flow.complete .node.last {
+    fill: var(--cyan);
+    stroke: var(--cyan);
+    filter: drop-shadow(0 0 8px rgba(32,214,244,.6));
+  }
+
+  /* Resumo do relatório */
+  .done .summary {
+    display:flex; flex-direction:column; gap: 8px;
+  }
+  .done .sum-row {
+    display:flex; justify-content:space-between; align-items:center;
+    padding: 12px 14px;
+    background: var(--ink-800);
+    border: 1px solid var(--ink-600);
+    border-radius: 12px;
+  }
+  .done .sum-row .k { color: var(--ink-300); font-size: 13px; }
+  .done .sum-row .v { color: var(--ink-50); font-size: 13px; font-weight: 650; font-family: 'IBM Plex Mono', monospace; }
+  .done .sum-row .v.big { font-size: 22px; letter-spacing: -0.02em; }
+
+  /* CTAs empilhados no rodapé */
+  .done .actions {
+    margin: 22px 22px 0;
+    display:flex; flex-direction:column; gap: 10px;
+    position:relative; z-index:5;
+  }
+  .btn-primary {
+    width:100%; height: 52px; border-radius: 14px;
+    background: var(--grad); color: white;
+    border: 0; cursor: pointer; font: inherit;
+    font-size: 15px; font-weight: 650;
+    display:flex; align-items:center; justify-content:center; gap: 8px;
+    box-shadow: 0 12px 32px rgba(22,140,255,.32);
+  }
+  .btn-primary svg { width: 18px; height: 18px; }
+  .btn-ghost {
+    width:100%; height: 44px; border-radius: 12px;
+    background: transparent; color: var(--ink-200);
+    border: 1px solid var(--ink-600);
+    cursor: pointer; font: inherit;
+    font-size: 13px; font-weight: 500;
+    display:flex; align-items:center; justify-content:center; gap: 8px;
+  }
+
+  /* Notas de técnica no rodapé da página */
+  .notes {
+    margin-top: 64px;
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+    max-width: 1640px;
+  }
+  .note h4 {
+    font-size: 13px; font-weight: 650; letter-spacing: 0.06em;
+    color: var(--cyan); text-transform: uppercase; margin: 0 0 10px;
+  }
+  .note p {
+    font-size: 13px; line-height: 1.55; color: var(--ink-200);
+    margin: 0 0 8px;
+  }
+  .note p b { color: var(--ink-50); font-weight: 600; }
+
+  /* Compatibilidade badges */
+  .compat {
+    margin-top: 32px;
+    display:flex; gap: 16px; flex-wrap:wrap;
+    font-family:'IBM Plex Mono', monospace; font-size: 11px;
+    color: var(--ink-300);
+  }
+  .compat .dot {
+    display: inline-block; width: 8px; height: 8px; border-radius: 99px;
+    margin-right: 6px; vertical-align: middle;
+  }
+  .compat .ok { background: var(--positive); }
+  .compat .cautious { background: var(--warn); }
+  .compat .skip { background: var(--critical); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>doniq · Alternativa 02 · "O Repouso Fluido"</h1>
+    <h2>Movimento, plasticidade, intuitividade e <span class="accent">conforto visual</span></h2>
+    <p class="lede">
+      A v1 era sóbria e correta, mas ainda parecia uma série de telas estáticas. Esta alternativa re-imagina a Home e o fluxo "Contar visita" como uma sequência de estados coreografados — a linha "Da fala ao próximo passo" deixa de ser uma barra reta e vira uma curva orgânica que reage ao que o representante está fazendo. Tudo que se move carrega a transformação Falar → Revisar → Feito.
+    </p>
+    <div class="tags">
+      <span class="tag">view-transitions · baseline 2026</span>
+      <span class="tag">@starting-style · sheet morph</span>
+      <span class="tag">OKLCH derived tints</span>
+      <span class="tag">scroll-driven · mesh tonal</span>
+      <span class="tag warn">scroll-timeline · fallback IO</span>
+      <span class="tag positive">60fps mid-range android</span>
+    </div>
+  </header>
+
+  <div class="frames">
+
+    <!-- ─────────── FRAME 1 — IDLE ─────────── -->
+    <div class="frame idle" style="position:relative;">
+      <div class="frame-label"><b>01</b> · repouso</div>
+      <div class="mesh"></div>
+      <div class="grain"></div>
+
+      <div class="status">
+        <span>9:41</span>
+        <span class="right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M12 20h.01"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2"/></svg>
+        </span>
+      </div>
+
+      <div class="content">
+        <div class="top-bar">
+          <span class="wm">doni<span class="q">q</span></span>
+          <div class="avatar">JM</div>
+        </div>
+
+        <div class="hero">
+          <div class="meta">SEG <span class="now">●</span> 07.SET.2026 · ZONA SUL · SP</div>
+          <div class="num">12<span class="sep">/</span>24<span class="small">visitas</span></div>
+          <div class="legend"><b>12 feitas, 12 pela frente.</b> Você está no ritmo da semana.</div>
+        </div>
+
+        <!-- Definições SVG compartilhadas -->
+        <svg width="0" height="0" style="position:absolute;">
+          <defs>
+            <linearGradient id="grad-flow" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#7C4DFF"/>
+              <stop offset="50%" stop-color="#168CFF"/>
+              <stop offset="100%" stop-color="#20D6F4"/>
+            </linearGradient>
+            <linearGradient id="wave-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#7C4DFF" stop-opacity="0.5"/>
+              <stop offset="50%" stop-color="#168CFF"/>
+              <stop offset="100%" stop-color="#20D6F4"/>
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <div class="flow">
+          <div class="label">
+            <span>Falar</span><span>Revisar</span><span>Feito</span>
+          </div>
+          <svg viewBox="0 0 320 50" preserveAspectRatio="none">
+            <path class="path" d="M 12 36 C 60 8, 130 52, 200 24 S 290 44, 308 28" />
+            <circle class="node on first" cx="12" cy="36" r="6"/>
+            <circle class="node on mid" cx="160" cy="20" r="6"/>
+            <circle class="node on last" cx="308" cy="28" r="6"/>
+          </svg>
+        </div>
+
+        <div class="visits">
+          <div class="visits-head">
+            <h3>Próximas visitas</h3>
+            <a class="more" href="#">Ver todas</a>
+          </div>
+
+          <div class="visit-card live">
+            <div class="row1">
+              <div>
+                <p class="name">Mercado do Bairro</p>
+                <p class="company">Mercado do Bairro · Saúde</p>
+              </div>
+              <span class="chip live"><span class="dot"></span>Ao vivo</span>
+            </div>
+            <div class="row2">
+              <span class="meta">15<b>:15</b></span>
+              <span class="dist">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                3,4 km
+              </span>
+            </div>
+          </div>
+
+          <div class="visit-card">
+            <div class="row1">
+              <div>
+                <p class="name">Padaria São Bento</p>
+                <p class="company">Padaria São Bento · Vila Mariana</p>
+              </div>
+              <span class="chip pending"><span class="dot"></span>Pendente</span>
+            </div>
+            <div class="row2">
+              <span class="meta">14<b>:30</b></span>
+              <span class="dist">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                1,2 km
+              </span>
+            </div>
+          </div>
+
+          <div class="visit-card">
+            <div class="row1">
+              <div>
+                <p class="name">Farmácia Vida</p>
+                <p class="company">Farmácia Vida · Ipiranga</p>
+              </div>
+              <span class="chip done"><span class="dot"></span>Concluída</span>
+            </div>
+            <div class="row2">
+              <span class="meta">16<b>:00</b></span>
+              <span class="dist">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                4,1 km
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fab-wrap">
+        <div class="fab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </div>
+      </div>
+
+      <div class="tabbar">
+        <div class="tab active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span class="lbl">Hoje</span>
+        </div>
+        <div class="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
+          <span class="lbl">Rota</span>
+        </div>
+        <div class="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+          <span class="lbl">CRM</span>
+        </div>
+        <div class="tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+          <span class="lbl">Conta</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────── FRAME 2 — RECORDING ─────────── -->
+    <div class="frame rec" style="position:relative;">
+      <div class="frame-label"><b>02</b> · falar (morph)</div>
+      <div class="mesh"></div>
+      <div class="grain"></div>
+      <div class="overlay"></div>
+
+      <div class="record-panel">
+        <div class="rec-top">
+          <span>Falar · visita em andamento</span>
+          <span class="live-tag"><span class="dot"></span>Ao vivo</span>
+        </div>
+
+        <div class="rec-middle">
+          <div class="timer">00<b>:</b>18<span class="ms">.42</span></div>
+
+          <!-- Waveform SVG animada -->
+          <svg class="wave" viewBox="0 0 320 80" preserveAspectRatio="none">
+            <path d="M 0 40
+              Q 8 12, 16 40 T 32 40 T 48 40 T 64 40 T 80 40 T 96 40 T 112 40 T 128 40 T 144 40 T 160 40 T 176 40 T 192 40 T 208 40 T 224 40 T 240 40 T 256 40 T 272 40 T 288 40 T 304 40 T 320 40">
+              <animate attributeName="d"
+                dur="1.8s" repeatCount="indefinite"
+                values="
+                  M 0 40 Q 8 12 16 40 T 32 40 T 48 40 T 64 40 T 80 40 T 96 40 T 112 40 T 128 40 T 144 40 T 160 40 T 176 40 T 192 40 T 208 40 T 224 40 T 240 40 T 256 40 T 272 40 T 288 40 T 304 40 T 320 40;
+                  M 0 40 Q 8 56 16 40 T 32 40 T 48 40 T 64 40 T 80 40 T 96 40 T 112 40 T 128 40 T 144 40 T 160 40 T 176 40 T 192 40 T 208 40 T 224 40 T 240 40 T 256 40 T 272 40 T 288 40 T 304 40 T 320 40;
+                  M 0 40 Q 8 18 16 40 T 32 40 T 48 40 T 64 40 T 80 40 T 96 40 T 112 40 T 128 40 T 144 40 T 160 40 T 176 40 T 192 40 T 208 40 T 224 40 T 240 40 T 256 40 T 272 40 T 288 40 T 304 40 T 320 40"/>
+            </path>
+          </svg>
+
+          <p class="phrase">"…topou testar a nova linha de orgânicos em três SKUs a partir de quinze de setembro…"</p>
+
+          <div class="stop-btn" title="Concluir relato">
+            <div class="sq"></div>
+          </div>
+        </div>
+
+        <div class="rec-foot">
+          <div>Toque para parar · <kbd>espaço</kbd> para pausar</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────── FRAME 3 — PROCESSING ─────────── -->
+    <div class="frame proc" style="position:relative;">
+      <div class="frame-label"><b>03</b> · organizar</div>
+      <div class="mesh"></div>
+      <div class="grain"></div>
+
+      <div class="status">
+        <span>9:41</span>
+        <span class="right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M12 20h.01"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2"/></svg>
+        </span>
+      </div>
+
+      <div class="processing-card">
+        <div class="head">
+          <span class="ai-orb"></span>
+          Organizando seu relato
+        </div>
+        <h2>Só um instante.</h2>
+        <p class="sub">O doniq está separando clientes, contexto e próximos passos. Você só revisa.</p>
+
+        <div class="extracts">
+          <div class="extract">
+            <div class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="body">
+              <p class="k">Cliente</p>
+              <p class="v">Padaria São Bento · Vila Mariana</p>
+            </div>
+          </div>
+
+          <div class="extract">
+            <div class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            </div>
+            <div class="body">
+              <p class="k">Contexto</p>
+              <p class="v">Nova linha de orgânicos · 3 SKUs</p>
+            </div>
+          </div>
+
+          <div class="extract">
+            <div class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <div class="body">
+              <p class="k">Próximo passo</p>
+              <p class="v">Enviar amostra até qua, 10.set</p>
+            </div>
+          </div>
+
+          <div class="extract">
+            <div class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="body">
+              <p class="k">Follow-up</p>
+              <p class="v">Ligar na quinta · 14h</p>
+            </div>
+          </div>
+
+          <div class="extract" style="opacity: 0.4;">
+            <div class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-dasharray="2 2"><circle cx="12" cy="12" r="10"/></svg>
+            </div>
+            <div class="body">
+              <p class="k">CRM</p>
+              <p class="v">Sincronizando oportunidade…</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="proc-foot">
+        <span>Organizado em</span>
+        <b>00:01.84</b>
+      </div>
+    </div>
+
+    <!-- ─────────── FRAME 4 — DONE ─────────── -->
+    <div class="frame done" style="position:relative;">
+      <div class="frame-label"><b>04</b> · feito</div>
+      <div class="mesh"></div>
+      <div class="grain"></div>
+
+      <div class="status">
+        <span>9:41</span>
+        <span class="right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.05a6 6 0 0 1 7 0"/><path d="M12 20h.01"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2"/></svg>
+        </span>
+      </div>
+
+      <svg width="0" height="0" style="position:absolute;">
+        <defs>
+          <linearGradient id="grad-flow-2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#7C4DFF"/>
+            <stop offset="50%" stop-color="#168CFF"/>
+            <stop offset="100%" stop-color="#20D6F4"/>
+          </linearGradient>
+        </defs>
+      </svg>
+
+      <div class="done-card">
+        <div class="check-ring">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+
+        <h2>Falou, tá feito.</h2>
+        <p class="sub">Visita registrada. Próximo passo marcado. CRM sincronizado.</p>
+
+        <div class="flow complete">
+          <div class="label">
+            <span>Falar</span><span>Revisar</span><span class="on">Feito</span>
+          </div>
+          <svg viewBox="0 0 320 50" preserveAspectRatio="none">
+            <path class="path" d="M 12 36 C 60 8, 130 52, 200 24 S 290 44, 308 28" />
+            <circle class="node on first" cx="12" cy="36" r="6"/>
+            <circle class="node on mid" cx="160" cy="20" r="6"/>
+            <circle class="node on last" cx="308" cy="28" r="6"/>
+          </svg>
+        </div>
+
+        <div class="summary">
+          <div class="sum-row">
+            <span class="k">Cliente</span>
+            <span class="v">Padaria São Bento</span>
+          </div>
+          <div class="sum-row">
+            <span class="k">Relatório</span>
+            <span class="v big">Pronto</span>
+          </div>
+          <div class="sum-row">
+            <span class="k">Próximo passo</span>
+            <span class="v">qua, 10.set</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary">
+          Revisar relatório
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+        <button class="btn-ghost">Salvar e iniciar próxima</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Notas técnicas -->
+  <div class="notes">
+    <div class="note">
+      <h4>Movimento</h4>
+      <p><b>Malha tonal orgânica.</b> 3 pontos de luz (violet/blue/cyan) à deriva em 28s, atrás de tudo. Conforto visual sem distrair. <code>prefers-reduced-motion</code> respeitado.</p>
+      <p><b>Waveform real.</b> SVG com path animado em SMIL reage à amplitude da fala. Em produção, alimentado por Web Audio API analyser.</p>
+      <p><b>Fab morph.</b> Idle pulse 1.06× em 2.4s. Ao tocar, blob orgânico (border-radius assimétrico animado) cobre a tela.</p>
+    </div>
+    <div class="note">
+      <h4>Plasticidade</h4>
+      <p><b>Linha fluida substitui a barra reta.</b> Curva Bézier com stroke-dasharray animado — a "Da fala ao próximo passo" vira orgânica, não decoração.</p>
+      <p><b>Cards com cantos assimétricos.</b> Border-radius 22-14-14-14 em vez de uniforme — quebra o grid perfeito e gera sensação tátil.</p>
+      <p><b>Stop blob.</b> 80px com border-radius animado entre 99px e 38%/62%/63%/37% — forma viva que respira.</p>
+    </div>
+    <div class="note">
+      <h4>Intuitividade</h4>
+      <p><b>Único elemento vivo = próxima ação.</b> Em repouso, só o FAB pulsa. Ao gravar, só o stop-blob. Sem elementos competindo por atenção.</p>
+      <p><b>AI transparency.</b> Chips de extração aparecem em sequência (200ms cada) — usuário vê o que está sendo organizado. "Organizar" continua sendo trabalho do doniq.</p>
+      <p><b>Tab ativa com indicator.</b> Barra gradient 28×3px sobre a aba ativa substitui mudança de cor. Olhar periférico detecta onde estou.</p>
+    </div>
+    <div class="note">
+      <h4>Conforto visual</h4>
+      <p><b>Tipografia generosa.</b> Inter Tight 88px no display-xl, 22px nos títulos, 14-15px no body. Line-height 1.5 no texto corrido. Rhythm vertical maior que v1.</p>
+      <p><b>Profundidade por camadas tonais, não sombras.</b> Glassmorphism 2.0 seletivo (só overlays e cards ativos), backdrop-blur 8-16px.</p>
+      <p><b>Granulado sutil.</b> Pixel-pattern a 4% de opacidade adiciona textura sem ruído. Reduz fadiga em sessões longas.</p>
+    </div>
+  </div>
+
+  <div class="compat">
+    <span><span class="dot ok"></span>Baseline 2026</span>
+    <span><span class="dot ok"></span>iOS 18+ · Android Chrome 126+</span>
+    <span><span class="dot cautious"></span>WebView: testar scroll-timeline</span>
+    <span><span class="dot ok"></span>60fps mid-range Android</span>
+    <span><span class="dot ok"></span>Reduced-motion respected</span>
+  </div>
+</div>
+</body>
+</html>
